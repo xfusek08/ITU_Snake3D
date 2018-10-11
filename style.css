@@ -1,10 +1,47 @@
 body {
-  padding: 0; margin: 0;
+  padding: 0; 
+  margin: 0;
+  background-color: black;
 }
 
 .screen {
+  margin: auto;
   width: 1240px;
   height: 720px;
   display: none;
   background-color: #26263A;
+}
+
+/* mainMenu */
+* {
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-family: Ravie;
+  color: #82F2FF;
+  font-size: 450%;
+  padding-top: 1%;
+  margin: 0%;
+  user-select: none;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/*.map {
+
+}*/
+
+.map p {
+  margin: auto;
+}
+
+.mapImg {
+  height: 300px;
+  width: 300px;
 }

@@ -5,6 +5,7 @@
 // Screen with editor
 
 var EditorScreen = function(worldMap) {
+
   if (!(worldMap instanceof WorldMap))
     throw "Editor have to take isntance of WorldMap object as parameter."
 

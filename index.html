@@ -14,26 +14,33 @@
     <script src="src/main.js"></script>
     <script src="src/mainmenu.js"></script>
     <script src="src/constants.js"></script>
+    <script src="src/editor.js"></script>
+    <script src="src/WorldMap.js"></script>
   </head>
   <body>
-    <div class="screen" id="mainMenuScreenDiv">
-
-    </div>
+    <div class="screen" id="mainMenuScreenDiv"></div>
 
     <div class="screen" id="editorScreenDiv">
+
+      <div class="editor_objectbar"> obj bar </div>
+
       <div class="editor_topbar">
+        <table>
+          <td></td>
+          <td>
+            <div class="mapnamediv">
+              <input type="text" name="worldMapName_input" />
+            </div>
+          </td>
+          <td>
 
+          </td>
+        </table>
       </div>
 
-      <div class="editor_objectbar">
-
-      </div>
-
-      <div class="editor_canvas_div">
-    </div>
-
-    <div class="screen" id="gameScreenDiv">
+      <div class="editor_canvas_div"> canvas bar </div>
 
     </div>
+    <div class="screen" id="gameScreenDiv"></div>
   </body>
 </html>

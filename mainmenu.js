@@ -2,7 +2,7 @@
 // Project: ITU project: Game "Snake in 3D" (UX prototype)
 // Author: Petr Fusek
 // File: MainMenuScreen.js
-// Type of screen witch dysplays main menu
+// Type of screen witch displays main menu
 
 var MainMenuScreen = function() {
 
@@ -17,6 +17,8 @@ var MainMenuScreen = function() {
 
   this.deinit = function () {
     // generate screen html and behavor
+    this.hide();
+    // disable all event reactions ...
   }
 
   this.draw = function() {
@@ -25,9 +27,11 @@ var MainMenuScreen = function() {
 
   this.hide = function () {
     // code to hide and pouse act screen
+    this.mainMenuDiv.hide();
   }
 
   this.show = function () {
     // code to restorre hiden screen
+    this.mainMenuDiv.show();
   }
 }

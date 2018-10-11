@@ -41,7 +41,7 @@ var screenStack = new function() {
 
 function setup() {
   createCanvas(1240, 720).remove();
-  screenStack.pushScreen(new MainMenuScreen(canvas));
+  screenStack.pushScreen(new MainMenuScreen());
 }
 
 function draw() {

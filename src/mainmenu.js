@@ -11,7 +11,7 @@ var MainMenuScreen = function() {
   // public
   this.init = function() {
     // generate screen html and behavor
-    this.mainMenuDiv = select('div', '#mainMenuScreenDiv');
+    this.mainMenuDiv = select('#mainMenuScreenDiv');
     this.mainMenuDiv.show();
   }
 

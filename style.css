@@ -1,3 +1,4 @@
+
 body {
   padding: 0; margin: 0;
 }
@@ -7,4 +8,16 @@ body {
   height: 720px;
   display: none;
   background-color: #26263A;
+}
+
+.editor_objectbar {
+  background-color: red;
+}
+
+.editor_topbar {
+  background-color: blue;
+}
+
+.editor_canvas_div {
+  background-color: green;
 }

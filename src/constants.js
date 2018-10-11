@@ -4,6 +4,5 @@
 // definition of constant for project
 
 
-const STATUS_STOPPED = 1000;
-const STATUS_RUNNING = 1001;
-const STATUS_END     = 1001;
+const DEFAULT_WORLD_WIDTH = 20;
+const DEFAULT_WORLD_HEIGHT = 20;

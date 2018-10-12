@@ -6,6 +6,7 @@
     <title>Snake3D</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="editor_styles.css">
 
     <script src="lib/p5.min.js"></script>
     <script src="lib/p5.dom.min.js"></script>
@@ -27,19 +28,12 @@
       <div class="editor_topbar">
         <table>
           <td></td>
-          <td>
-            <div class="mapnamediv">
-              <input type="text" name="worldMapName_input" />
-            </div>
-          </td>
-          <td>
-
-          </td>
+          <td class="nameCell"><input type="text" id="worldMapName_input" /></td>
+          <td class="buttonCell"><div class="topBarButton" id="saveTopButton"></div></td>
+          <td class="buttonCell"><div class="topBarButton" id="helpTopButton"></div></td>
+          <td class="buttonCell"><div class="topBarButton" id="exitTopButton"></div></td>
         </table>
       </div>
-
-      <div class="editor_canvas_div"> canvas bar </div>
-
     </div>
     <div class="screen" id="gameScreenDiv"></div>
   </body>

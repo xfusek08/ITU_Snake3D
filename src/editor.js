@@ -4,20 +4,35 @@
 // File: editor.js
 // Screen with editor
 
-var EditorScreen = function(worldMap) {
+var EditorScreen = function (canvas, worldMap) {
 
   if (!(worldMap instanceof WorldMap))
     throw "Editor have to take isntance of WorldMap object as parameter."
 
-  this.editorDiv = null;
-  this.worldPam = worldMap;
+  var worldPam = worldMap;
+  var canvas = canvas;
+  var editorDivElement = null;
+  var mapNameInputElement = null;
+  var isPaused = false;
+
+  var rotation = 0;
 
   // public
   this.init = function () {
-    // generate screen html and behavor
-    this.editorDiv = select('#editorScreenDiv');
-    // this.editorDiv = document.getElementById("editorScreenDiv");
-    this.editorDiv.show();
+    // init main div
+    editorDivElement = select('#editorScreenDiv');
+    editorDivElement.show();
+    editorDivElement.style('background', 'transparent');
+
+    // init canvas
+    resizeCanvas(editorDivElement.size().width, editorDivElement.size().height);
+    canvas.show();
+
+    // define event on name changed
+    mapNameInputElement = select('#worldMapName_input');
+    mapNameInputElement.value(worldMap.Name);
+    mapNameInputElement.input(this.nameChanged);
+
   }
 
   this.deinit = function () {
@@ -27,16 +42,36 @@ var EditorScreen = function(worldMap) {
   }
 
   this.draw = function () {
-    // real time reaction ...
+    if (isPaused)
+      return;
+
+    background("#26263A");
+    stroke(255);
+    noFill();
+    rotateX(rotation)
+    rotateY(rotation)
+    box(50);
+
+    rotation += 0.05;
   }
 
   this.hide = function () {
     // code to hide and pouse act screen
-    this.editorDiv.hide();
+    this.editorDivElement.hide();
+    canvas.hide();
+    isPaused = true;
   }
 
   this.show = function () {
     // code to restorre hiden screen
-    this.editorDiv.show();
+    this.editorDivElement.show();
+    canvas.hide();
+    isPaused = false;
+  }
+
+  // process events
+  this.nameChanged = function () {
+    worldPam.Name = mapNameInputElement.value();
+    console.log("name changed to: " + worldPam.Name);
   }
 }

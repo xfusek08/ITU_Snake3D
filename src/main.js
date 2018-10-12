@@ -40,9 +40,9 @@ var screenStack = new function() {
 };
 
 function setup() {
-  noCanvas();
-  // screenStack.pushScreen(new MainMenuScreen());
-  screenStack.pushScreen(new EditorScreen(new WorldMap('Vlastní mapa 1')));
+  var canvas = createCanvas(100, 100, WEBGL).hide();
+  screenStack.pushScreen(new MainMenuScreen());
+  screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('Vlastní mapa 1')));
 }
 
 function draw() {

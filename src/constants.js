@@ -6,3 +6,6 @@
 
 const DEFAULT_WORLD_WIDTH = 20;
 const DEFAULT_WORLD_HEIGHT = 20;
+const TILE_SIZE = 20;
+const MIN_CAMERA_Z = 300;
+const MAX_CAMERA_Z = 900;

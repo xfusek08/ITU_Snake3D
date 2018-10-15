@@ -7,31 +7,25 @@
 // stack of game screens, active (redrawed) screen is always the one on top
 var screenStack = new function() {
   this.stack = [];
+  this.topScreen = null;
 
   this.pushScreen = function(screen) {
-    var topScreen = this.topScreen();
-    if (topScreen)
-      topScreen.hide();
+    if (this.topScreen !== null)
+      this.topScreen.hide();
     this.stack.push(screen);
+    this.topScreen = screen;
     screen.init();
   }
 
   this.popScreen = function (screen) {
-    var topScreen = this.topScreen();
-    if (topScreen)
-    {
-      topScreen.deinit();
-      this.stack.pop();
-      topScreen = this.topScreen();
-      if (topScreen)
-        topScreen.show();
-    }
-  }
-
-  this.topScreen = function() {
     if (this.stack.length > 0)
-      return this.stack[this.stack.length - 1];
-    return false;
+    {
+      this.topScreen.deinit();
+      this.stack.pop();
+      this.topScreen = this.stack[this.stack.length - 1];
+      if (this.topScreen !== null)
+        this.topScreen.show();
+    }
   }
 
   this.size = function () {
@@ -42,9 +36,20 @@ var screenStack = new function() {
 function setup() {
   var canvas = createCanvas(100, 100, WEBGL).hide();
   screenStack.pushScreen(new MainMenuScreen());
-  screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('Vlastní mapa 1')));
+  screenStack.pushScreen(new EditorScreen(canvas,
+    new WorldMap('Vlastní mapa 1', 30, 30) // [map 30 x 30]
+  ));
 }
 
 function draw() {
-  screenStack.topScreen().draw();
+  screenStack.topScreen.draw();
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  screenStack.topScreen.windowResizedEvent();
+}
+
+function mouseWheel(event) {
+  screenStack.topScreen.mouseWheenEvent(event);
 }

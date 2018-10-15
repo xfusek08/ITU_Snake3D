@@ -5,11 +5,6 @@
   left: 0px;
 }
 
-.editor_objectbar {
-  border-right: 3px solid #5A5A92;
-  width: 10%;
-  height: 100%;
-}
 
 .editor_topbar {
   width: 100%;
@@ -30,15 +25,25 @@
   padding-right: 30px;
 }
 
+.editor_objectbar {
+  border-right: 3px solid #5A5A92;
+  width: 10%;
+  height: 100%;
+}
+
 .editor_topbar #worldMapName_input {
   border: 3px solid #5A5A92;
   border-radius: 100px;
   width: 100%;
-  background: none;
   text-align: center;
   color: white;
   font-size: 20px;
   font-family: "Segoe UI"
+}
+
+.editor_objectbar,
+.editor_topbar #worldMapName_input {
+  background: rgba(10, 10, 30, 0.7);
 }
 
 .editor_topbar #worldMapName_input:focus {
@@ -87,9 +92,17 @@
   margin: 0;
 }
 
-#editor_canvas_div > *
-{
+#editor_canvas_div > * {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+#fpscounter {
+  position: absolute;
+  top: calc(100% - 50px);
+  left: calc(100% - 300px);
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
 }

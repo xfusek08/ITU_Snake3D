@@ -47,9 +47,20 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  screenStack.topScreen.windowResizedEvent();
 }
 
 function mouseWheel(event) {
   screenStack.topScreen.mouseWheenEvent(event);
+}
+
+function touchMoved() {
+  screenStack.topScreen.touchMovedEvent();
+}
+
+function touchStarted() {
+  screenStack.topScreen.touchStartedEvent();
+}
+
+function touchEnded() {
+  screenStack.topScreen.touchEndedEvent();
 }

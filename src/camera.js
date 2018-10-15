@@ -27,4 +27,9 @@ var GeneralCamera = function(
     this.Position.add(createVector(dx, dy, dz));
     this.Target.add(createVector(dx, dy, dz));
   }
+
+  this.move = function (vector) {
+    this.Position.add(vector);
+    this.Target.add(vector);
+  }
 }

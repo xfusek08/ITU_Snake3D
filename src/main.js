@@ -37,7 +37,7 @@ function setup() {
   var canvas = createCanvas(100, 100, WEBGL).hide();
   screenStack.pushScreen(new MainMenuScreen());
   screenStack.pushScreen(new EditorScreen(canvas,
-    new WorldMap('Vlastní mapa 1', 30, 30) // [map 30 x 30]
+    new WorldMap('Vlastní mapa 1', 30, 20) // [map 30 x 30]
   ));
 }
 

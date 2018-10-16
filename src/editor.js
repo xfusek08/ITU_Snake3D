@@ -20,6 +20,10 @@ var EditorScreen = function (canvas, worldMap) {
   var worldCamera = null;
   var mousePrePosition = null;
   var isCamMoving = false;
+  var maxZPos = 0;
+
+  var pointLightPos = 0;
+  var lightDirection = 0;
 
   this.init = function () {
     // Main Screen
@@ -40,11 +44,20 @@ var EditorScreen = function (canvas, worldMap) {
     fpsCounterElement = select('#fpscounter');
 
     //camera
+    maxZPos = (MAX_CAMERA_Z * max(worldMap.Heigth, worldMap.Width)) / DEFAULT_WORLD_SIZE;
     worldCamera = new GeneralCamera(
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, MAX_CAMERA_Z,
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 8, 0
+      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, maxZPos,
+      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, 0
     );
     mousePrePosition = createVector(worldCamera.Position.x, worldCamera.Position.y, 0);
+
+    //pre-calculate light vectors
+    var mapCenterX = worldMap.Width * TILE_SIZE / 2;
+    pointLightPos = createVector(mapCenterX, -300, 100)
+    lightDirection =
+      createVector(mapCenterX, 0, 0).sub(
+        createVector(mapCenterX, pointLightPos.y, 1000)
+      ).normalize();
 
     // property and fields values
     isPaused = false;
@@ -66,16 +79,34 @@ var EditorScreen = function (canvas, worldMap) {
     // use camera
     worldCamera.use();
 
-    // translate(0,0,-1); // make sure that axes are shown above
+    var mousepos = this.mouseToXYPlane();
+
+    // lights
+    pointLight(255, 255, 255, pointLightPos);
+    directionalLight(200, 200, 200, lightDirection);
+    ambientLight(255);
+
+    // draw world
     worldMap.draw();
 
-    // // little box whe camera is pointing
-    // push();
-    // noStroke();
-    // translate(worldCamera.Target);
-    // fill(150, 250 ,255);
-    // box(10);
-    // pop();
+    push();
+    noStroke();
+    translate(mousepos);
+    translate(0,0, 30);
+    ambientMaterial(150, 250, 255);
+    specularMaterial(150, 250, 255);
+    sphere(10);
+    pop();
+
+    push();
+    stroke(255, 0, 0);
+    noFill();
+    line(
+      mousepos.x, mousepos.y, 30,
+      mousepos.x, mousepos.y, mousepos.z
+    );
+    ellipse(mousepos.x, mousepos.y, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
+    pop();
 
     stroke(255, 0, 0); line(0, 0, 0, 1000, 0, 0); // RED   - x axis
     stroke(0, 255, 0); line(0, 0, 0, 0, 1000, 0); // GREEB - Y axis
@@ -111,19 +142,20 @@ var EditorScreen = function (canvas, worldMap) {
     var zPos = worldCamera.Position.z;
     zPos += event.delta;
 
-    if (zPos > MAX_CAMERA_Z)
-      zPos = MAX_CAMERA_Z;
+    if (zPos > maxZPos)
+      zPos = maxZPos;
     else if (zPos < MIN_CAMERA_Z)
       zPos = MIN_CAMERA_Z;
 
     worldCamera.Position.z = zPos;
+    worldCamera.Target.y = worldCamera.Position.y - (maxZPos - zPos) / (2 * maxZPos / MAX_CAMERA_Z);
   }
 
   this.touchStartedEvent = function () {
     isCamMoving = true;
     mousePrePosition = createVector(mouseX, mouseY);
     // mousePrePosition = this.mouseToXYPlane();
-    cursor(MOVE);
+    cursor(HAND);
   }
 
   this.touchEndedEvent = function () {

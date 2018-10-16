@@ -4,8 +4,7 @@
 // definition of constant for project
 
 
-const DEFAULT_WORLD_WIDTH = 20;
-const DEFAULT_WORLD_HEIGHT = 20;
+const DEFAULT_WORLD_SIZE = 20;
 const TILE_SIZE = 20;
-const MIN_CAMERA_Z = 300;
-const MAX_CAMERA_Z = 900;
+const MIN_CAMERA_Z = 180;
+const MAX_CAMERA_Z = 400;

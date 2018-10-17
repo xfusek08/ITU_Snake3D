@@ -6,6 +6,7 @@
     <title>Snake3D</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="mainMenu.css">
 
     <script src="lib/p5.min.js"></script>
     <script src="lib/p5.dom.min.js"></script>
@@ -18,28 +19,10 @@
   <body>
     <div class="screen" id="mainMenuScreenDiv">
       <header>
-          <img class="exitButton" src="resources/exitButton.png" alt="">
+          <div class="exitButton"></div>
           <h1>Snake 3D</h1>
       </header>
-        <div class="menu">
-          <div class="map">
-            <div>
-              <img class="mapImg" src="resources/emptyMap.png" alt="">
-            </div>
-              <p>Empty</p>
-          </div>
-          <div class="map">
-            <img class="mapImg" src="resources/notEmptyMap.png" alt="">
-            <p>Bordered map</p>
-          </div>
-          <div class="map">
-            <img class="mapImg" src="resources/userCreated.png" alt="">
-            <p>User created</p>
-          </div>
-          <div class="addButton">
-            <img class="addImg" src="resources/addButton.png" alt="">
-            <p>Create new</p>
-          </div>
+      <div class="menu" id="mapMenu">
       </div>
     </div>
 

@@ -4,8 +4,12 @@ var ObjectBarItem = function (worldObject, parent) {
   if (!(worldObject instanceof WorldObject))
     throw "ObjectBarItem has to take instance of worldObject";
 
-  this.P5SketchInstance = new p5(function (sketch) {
+  var sketchPropagated = null;
+  var P5SketchInstance = new p5(function (sketch) {
+    // propagate sketch instance to objectbaritem
+    sketchPropagated = sketch;
     var rotY = 0;
+
 
     sketch.setup = function () {
       var actCanvas = sketch.createCanvas(parent.size().width, 80, WEBGL);
@@ -31,12 +35,15 @@ var ObjectBarItem = function (worldObject, parent) {
     }
   });
 
+  this.Parent = parent;
+  this.WorldObjectInstance = worldObject;
+
   this.pause = function () {
-    this.P5SketchInstance.sketch.noLoop();
+    sketchPropagated.noLoop();
   }
 
   this.unPause = function () {
-    this.P5SketchInstance.sketch.loop();
+    sketchPropagated.loop();
   }
 
   createDiv(worldObject.Name).parent(parent);

@@ -6,40 +6,27 @@
 }
 
 
-.editor_topbar {
+#editor_topbar {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+#editor_topbar table {
   width: 100%;
 }
 
-.editor_topbar table {
-  width: 100%;
-}
-
-.editor_topbar table td:first-child {
+#editor_topbar table td:first-child {
   width: 10%;
 }
 
-.editor_topbar .nameCell {
+#editor_topbar .nameCell {
   width:90%;
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-#editor_objectbar {
-  border-right: 3px solid #5A5A92;
-  width: 10%;
-  height: 100%;
-  color:white;
-  text-align: center;
-}
-
-#editor_objectbar > div {
-  border-bottom: 3px solid #5A5A92;
-  padding-bottom: 8px;
-  margin: 8px;
-}
-
-.editor_topbar #worldMapName_input {
+#editor_topbar #worldMapName_input {
   border: 3px solid #5A5A92;
   border-radius: 100px;
   width: 100%;
@@ -50,20 +37,20 @@
 }
 
 #editor_objectbar,
-.editor_topbar #worldMapName_input {
+#editor_topbar #worldMapName_input {
   background: rgba(10, 10, 30, 0.7);
 }
 
-.editor_topbar #worldMapName_input:focus {
+#editor_topbar #worldMapName_input:focus {
   outline: 0;
 }
 
-.editor_topbar .buttonCell {
+#editor_topbar .buttonCell {
   padding: 10px;
   padding-left: 2px;
 }
 
-.editor_topbar .topBarButton {
+#editor_topbar .topBarButton {
   border: 2.4px white solid;
   width: 20px;
   height: 20px;
@@ -74,16 +61,16 @@
   background-position: center;
 }
 
-.editor_topbar #saveTopButton {
+#editor_topbar #saveTopButton {
   background-image: url("res/save.png");
 }
 
-.editor_topbar #helpTopButton {
+#editor_topbar #helpTopButton {
   background-image: url("res/questionmark.png");
   background-size: 70%;
 }
 
-.editor_topbar #exitTopButton {
+#editor_topbar #exitTopButton {
   background-image: url("res/cross.png");
 }
 
@@ -118,4 +105,38 @@
 .p5Canvas.objCanvas {
   position: relative;
   z-index: 5;
+}
+
+#editor_objectbar {
+  border-right: 3px solid #5A5A92;
+  width: 10%;
+  min-width: 90px;
+  height: 100%;
+  color:white;
+  text-align: center;
+}
+
+#editor_objectbar .delimiter {
+  border-bottom: 3px solid #5A5A92;
+  margin-left: 13px;
+  margin-right: 13px;
+}
+
+#editor_objectbar .objectBarItemDiv {
+  margin: 8px;
+  border-radius: 20px;
+}
+
+#editor_objectbar .objectBarItemDiv > div {
+  padding: 5px;
+}
+
+#editor_objectbar .objectBarItemDiv:hover {
+  background-color: rgba(255,255,255,0.1);
+  /* cursor: pointer; */
+  cursor: pointer;
+}
+
+#editor_objectbar .objectBarItemDiv.selected {
+  background: rgba(200, 200, 255, 0.3);
 }

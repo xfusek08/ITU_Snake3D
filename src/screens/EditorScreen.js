@@ -17,11 +17,15 @@ var EditorScreen = function (canvas, worldMap) {
   var fpsCounterElement = null;
   var objectBar = null;
 
-  var isPaused = true;
   var worldCamera = null;
+  var mouseOnCanvasPos = null;;
+  var isMouseOnCanvas = true;
   var mousePrePosition = null;
   var isCamMoving = false;
   var maxZPos = 0;
+  var isPaused = true;
+
+  var selectedObject = null;
 
   // intilatization of screen
   this.init = function () {
@@ -30,7 +34,6 @@ var EditorScreen = function (canvas, worldMap) {
     editorDivElement.show();
     editorDivElement.style('background', 'transparent');
 
-    // Canvas
     resizeCanvas(editorDivElement.size().width, editorDivElement.size().height);
     canvas.show();
 
@@ -39,6 +42,13 @@ var EditorScreen = function (canvas, worldMap) {
     var objFactory = new WorldObjectFactory();
     objectBar.addObject(objFactory.createObject(OBJ_WALL));
     objectBar.addObject(objFactory.createObject(OBJ_START));
+    objectBar.onObjectSelection(this.ObjectSelectedEvent);
+
+    objectBar.ParentElement.mouseOver(this.mouseEnterGUIElementEvent);
+    objectBar.ParentElement.mouseOut(this.mouseLeaveGUIElementEvent);
+    var topBarElement = select("#editor_topbar");
+    topBarElement.mouseOver(this.mouseEnterGUIElementEvent);
+    topBarElement.mouseOut(this.mouseLeaveGUIElementEvent);
 
     // Input
     mapNameInputElement = select('#worldMapName_input');
@@ -48,20 +58,24 @@ var EditorScreen = function (canvas, worldMap) {
     // FPS Counter
     fpsCounterElement = select('#fpscounter');
 
-    //camera
+    // diable context menu and selection
+    document.oncontextmenu = function () { return false; };
+    document.onselectstart = function () { return false; };
+
+    // rendering sections
+
+    // Camera
+    // Calculate camera maximal z position relative to actual size of world
+    // based on proportions of defauld values of world size and max Z position.
     maxZPos = (MAX_CAMERA_Z * max(worldMap.Heigth, worldMap.Width)) / DEFAULT_WORLD_SIZE;
     worldCamera = new GeneralCamera(
       worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, maxZPos,
       worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, 0
     );
     mousePrePosition = createVector(worldCamera.Position.x, worldCamera.Position.y, 0);
+    mouseOnCanvasPos = mousePrePosition;
 
-    // property and fields values
-    isPaused = false;
-  }
-
-  this.deinit = function () {
-    this.hide();
+    this.show();
   }
 
   this.draw = function () {
@@ -79,27 +93,33 @@ var EditorScreen = function (canvas, worldMap) {
     // draw world
     worldMap.draw();
 
-    // testing mouse position ...
-    var mousepos = mouseToXYPlane(canvas, worldCamera);
 
-    push();
-    noStroke();
-    translate(mousepos);
-    translate(0,0, 30);
-    ambientMaterial(150, 250, 255);
-    specularMaterial(150, 250, 255);
-    sphere(10);
-    pop();
+    // draw selected element hovering over user cursor
+    if (selectedObject !== null) {
 
-    push();
-    stroke(255, 0, 0);
-    noFill();
-    line(
-      mousepos.x, mousepos.y, 30,
-      mousepos.x, mousepos.y, mousepos.z
-    );
-    ellipse(mousepos.x, mousepos.y, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
-    pop();
+      if (isMouseOnCanvas)
+        mouseOnCanvasPos = mouseToXYPlane(canvas, worldCamera);
+
+      push();
+      noStroke();
+      translate(mouseOnCanvasPos);
+      translate(0,0, 30);
+      ambientMaterial(150, 250, 255);
+      specularMaterial(150, 250, 255);
+      sphere(10);
+      pop();
+
+      push();
+      stroke(255, 0, 0);
+      noFill();
+      line(
+        mouseOnCanvasPos.x, mouseOnCanvasPos.y, 30,
+        mouseOnCanvasPos.x, mouseOnCanvasPos.y, mouseOnCanvasPos.z
+      );
+      ellipse(mouseOnCanvasPos.x, mouseOnCanvasPos.y, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
+      pop();
+
+    }
 
     // draw axes
     stroke(255, 0, 0); line(0, 0, 0, 1000, 0, 0); // RED   - x axis
@@ -109,25 +129,51 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.hide = function () {
     // code to hide and pouse act screen
-    this.editorDivElement.hide();
-    canvas.hide();
+    editorDivElement.hide();
+    noLoop();
     objectBar.pause();
     isPaused = true;
   }
 
   this.show = function () {
     // code to restore hiden screen
-    this.editorDivElement.show();
-    canvas.hide();
-    objectBar.upPause();
+    editorDivElement.show();
+    canvas.show();
+    loop();
+    objectBar.unPause();
     isPaused = false;
   }
 
-  // events
+  this.deinit = function () {
+    this.hide();
+  }
+
+  // DOM events
   this.nameChangedEvent = function () {
     worldMap.Name = mapNameInputElement.value();
     console.log("name changed to: " + worldMap.Name);
   }
+
+  this.ObjectSelectedEvent = function (selectedWorldObj) {
+    selectedObject = selectedWorldObj;
+    mouseOnCanvasPos = mouseToXYPlane(canvas, worldCamera);
+    if (selectedObject instanceof WorldObject) {
+      console.log("selected object: " + selectedWorldObj.Name);
+    } else if (selectedObject == null) {
+      console.log("object deselected.");
+      selectedObject = null;
+    }
+  }
+
+  this.mouseEnterGUIElementEvent = function(){
+    isMouseOnCanvas = false;
+  }
+
+  this.mouseLeaveGUIElementEvent = function () {
+    isMouseOnCanvas = true;
+  }
+
+  // movement Events
 
   this.mouseWheenEvent = function (event) {
     var zPos = worldCamera.Position.z;
@@ -143,14 +189,18 @@ var EditorScreen = function (canvas, worldMap) {
   }
 
   this.touchStartedEvent = function () {
-    isCamMoving = true;
-    mousePrePosition = createVector(mouseX, mouseY);
-    cursor(HAND);
+    if (mouseButton == RIGHT) {
+      isCamMoving = true;
+      mousePrePosition = createVector(mouseX, mouseY);
+      cursor(HAND);
+    }
   }
 
   this.touchEndedEvent = function () {
-    isCamMoving = false;
-    cursor(ARROW);
+    if (mouseButton == RIGHT) {
+      isCamMoving = false;
+      cursor(ARROW);
+    }
   }
 
   this.touchMovedEvent = function() {

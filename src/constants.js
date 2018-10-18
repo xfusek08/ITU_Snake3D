@@ -8,3 +8,6 @@ const DEFAULT_WORLD_SIZE = 20;
 const TILE_SIZE = 20;
 const MIN_CAMERA_Z = 180;
 const MAX_CAMERA_Z = 400;
+
+const OBJ_WALL = 1;
+const OBJ_START = 2;

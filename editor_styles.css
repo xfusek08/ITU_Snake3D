@@ -96,7 +96,7 @@
 #fpscounter {
   position: absolute;
   top: calc(100% - 50px);
-  left: calc(100% - 50px);
+  left: calc(100% - 200px);
   color: white;
   font-weight: bold;
   font-size: 30px;

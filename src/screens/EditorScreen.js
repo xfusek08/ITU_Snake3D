@@ -11,21 +11,25 @@ var EditorScreen = function (canvas, worldMap) {
 
   var worldMap = worldMap;
   var canvas = canvas;
+  var isPaused = true;
 
   var editorDivElement = null;
   var mapNameInputElement = null;
   var fpsCounterElement = null;
   var objectBar = null;
 
+  // camera movement wariables
   var worldCamera = null;
-  var mouseOnCanvasPos = null;;
-  var isMouseOnCanvas = true;
   var mousePrePosition = null;
   var isCamMoving = false;
   var maxZPos = 0;
-  var isPaused = true;
 
+  // dropping object variables
+  var mouseOnCanvasPos = null;;
+  var isMouseOnCanvas = true;
   var selectedObject = null;
+  var isDropping = false;
+  var lastDroppedCoords = null;
 
   // intilatization of screen
   this.init = function () {
@@ -42,6 +46,7 @@ var EditorScreen = function (canvas, worldMap) {
     var objFactory = new WorldObjectFactory();
     objectBar.addObject(objFactory.createObject(OBJ_WALL));
     objectBar.addObject(objFactory.createObject(OBJ_START));
+    objectBar.addObject(objFactory.createObject(OBJ_DELETE));
     objectBar.onObjectSelection(this.ObjectSelectedEvent);
 
     objectBar.ParentElement.mouseOver(this.mouseEnterGUIElementEvent);
@@ -96,25 +101,25 @@ var EditorScreen = function (canvas, worldMap) {
 
     // draw selected element hovering over user cursor
     if (selectedObject !== null) {
-
-      if (isMouseOnCanvas)
+      if (isMouseOnCanvas) {
         mouseOnCanvasPos = mouseToXYPlane(canvas, worldCamera);
+        // fpsCounterElement.html(mouseOnCanvasPos.x + " " + mouseOnCanvasPos.y );
+        cursor(HAND);
+      }
 
       push();
       noStroke();
       translate(mouseOnCanvasPos);
-      translate(0,0, 30);
-      ambientMaterial(150, 250, 255);
-      specularMaterial(150, 250, 255);
-      sphere(10);
+      translate(0,0, TILE_SIZE * 4);
+      selectedObject.DrawShape(null);
       pop();
 
       push();
       stroke(255, 0, 0);
       noFill();
       line(
-        mouseOnCanvasPos.x, mouseOnCanvasPos.y, 30,
-        mouseOnCanvasPos.x, mouseOnCanvasPos.y, mouseOnCanvasPos.z
+        mouseOnCanvasPos.x, mouseOnCanvasPos.y, TILE_SIZE * 4,
+        mouseOnCanvasPos.x, mouseOnCanvasPos.y, 0
       );
       ellipse(mouseOnCanvasPos.x, mouseOnCanvasPos.y, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
       pop();
@@ -194,25 +199,49 @@ var EditorScreen = function (canvas, worldMap) {
       mousePrePosition = createVector(mouseX, mouseY);
       cursor(HAND);
     }
+
+    isDropping = selectedObject !== null &&
+      isMouseOnCanvas &&
+      mouseButton == LEFT
   }
 
   this.touchEndedEvent = function () {
     if (mouseButton == RIGHT) {
       isCamMoving = false;
       cursor(ARROW);
+    } else if (mouseButton == LEFT) {
+      if (isDropping) {
+        this.dropObjOnWorld();
+        isDropping = false;
+      }
     }
   }
 
   this.touchMovedEvent = function() {
-    if (!isCamMoving) return;
+    if (isCamMoving) {
+      var newPos = createVector(mouseX, mouseY);
+      worldCamera.move(
+        newPos.copy()
+          .sub(mousePrePosition)
+          .mult(-worldCamera.Position.z / 600)
+      );
+      mousePrePosition = newPos;
+    } else if (isDropping) {
+      this.dropObjOnWorld();
+    }
+  }
 
-    var newPos = createVector(mouseX, mouseY);
-    worldCamera.move(
-      newPos.copy()
-        .sub(mousePrePosition)
-        .mult(-worldCamera.Position.z / 600)
-    );
+  // Dropping mechanics
+  this.getMouseTileCoords = function() {
+    var mouseCoords = mouseToXYPlane(canvas, worldCamera);
+    var x = round((mouseCoords.x + TILE_SIZE / 2) / TILE_SIZE);
+    var y = round((mouseCoords.y + TILE_SIZE / 2) / TILE_SIZE);
+    // fpsCounterElement.html("x: " + x + " y: " + y);
+    return createVector(x, y);
+  }
 
-    mousePrePosition = newPos;
+  this.dropObjOnWorld = function () {
+    var coords = this.getMouseTileCoords();
+    worldMap.placeObject(coords.x, coords.y, selectedObject);
   }
 }

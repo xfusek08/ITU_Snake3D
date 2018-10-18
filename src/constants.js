@@ -11,3 +11,4 @@ const MAX_CAMERA_Z = 400;
 
 const OBJ_WALL = 1;
 const OBJ_START = 2;
+const OBJ_DELETE = 3;

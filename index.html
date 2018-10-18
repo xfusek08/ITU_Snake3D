@@ -8,24 +8,38 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="editor_styles.css">
 
+    <!-- utils and constants files -->
+    <script src="src/constants.js"></script>
+    <script src="src/utils.js"></script>
+
+    <!-- p5 libraries -->
     <script src="lib/p5.min.js"></script>
     <script src="lib/p5.dom.min.js"></script>
     <script src="lib/p5.sound.min.js"></script>
 
-    <script src="src/utils.js"></script>
+    <!-- Common directory sources -->
+    <script src="src/common/GeneralCamera.js"></script>
+    <script src="src/common/WorldMap.js"></script>
+    <script src="src/common/WorldObject.js"></script>
+    <script src="src/common/WorldObjectFactory.js"></script>
+
+    <!-- editor directory sources -->
+    <script src="src/editor/ObjectBar.js"></script>
+    <script src="src/editor/ObjectBarItem.js"></script>
+
+    <!-- screens  -->
+    <script src="src/screens/EditorScreen.js"></script>
+    <script src="src/screens/MainMenuScreen.js"></script>
+
+    <!-- main  -->
     <script src="src/main.js"></script>
-    <script src="src/mainmenu.js"></script>
-    <script src="src/constants.js"></script>
-    <script src="src/editor.js"></script>
-    <script src="src/WorldMap.js"></script>
-    <script src="src/camera.js"></script>
   </head>
   <body>
     <div class="screen" id="mainMenuScreenDiv"></div>
 
     <div class="screen" id="editorScreenDiv">
 
-      <div class="editor_objectbar"></div>
+      <div id="editor_objectbar"></div>
 
       <div class="editor_topbar">
         <table>

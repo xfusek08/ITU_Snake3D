@@ -25,10 +25,18 @@
   padding-right: 30px;
 }
 
-.editor_objectbar {
+#editor_objectbar {
   border-right: 3px solid #5A5A92;
   width: 10%;
   height: 100%;
+  color:white;
+  text-align: center;
+}
+
+#editor_objectbar > div {
+  border-bottom: 3px solid #5A5A92;
+  padding-bottom: 8px;
+  margin: 8px;
 }
 
 .editor_topbar #worldMapName_input {
@@ -41,7 +49,7 @@
   font-family: "Segoe UI"
 }
 
-.editor_objectbar,
+#editor_objectbar,
 .editor_topbar #worldMapName_input {
   background: rgba(10, 10, 30, 0.7);
 }
@@ -56,7 +64,7 @@
 }
 
 .editor_topbar .topBarButton {
-  border: 2.5px white solid;
+  border: 2.4px white solid;
   width: 20px;
   height: 20px;
   padding: 3px;
@@ -72,7 +80,7 @@
 
 .editor_topbar #helpTopButton {
   background-image: url("res/questionmark.png");
-  background-size: 73%;
+  background-size: 70%;
 }
 
 .editor_topbar #exitTopButton {
@@ -101,8 +109,13 @@
 #fpscounter {
   position: absolute;
   top: calc(100% - 50px);
-  left: calc(100% - 300px);
+  left: calc(100% - 50px);
   color: white;
   font-weight: bold;
   font-size: 30px;
+}
+
+.p5Canvas.objCanvas {
+  position: relative;
+  z-index: 5;
 }

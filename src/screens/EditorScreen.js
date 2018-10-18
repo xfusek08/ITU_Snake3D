@@ -15,6 +15,7 @@ var EditorScreen = function (canvas, worldMap) {
   var editorDivElement = null;
   var mapNameInputElement = null;
   var fpsCounterElement = null;
+  var objectBar = null;
 
   var isPaused = true;
   var worldCamera = null;
@@ -22,18 +23,22 @@ var EditorScreen = function (canvas, worldMap) {
   var isCamMoving = false;
   var maxZPos = 0;
 
-  var pointLightPos = 0;
-  var lightDirection = 0;
-
+  // intilatization of screen
   this.init = function () {
     // Main Screen
     editorDivElement = select('#editorScreenDiv');
     editorDivElement.show();
     editorDivElement.style('background', 'transparent');
 
-    // Canva
+    // Canvas
     resizeCanvas(editorDivElement.size().width, editorDivElement.size().height);
     canvas.show();
+
+    // initilize object bar with needed items
+    objectBar = new ObjectBar(select('#editor_objectbar'));
+    var objFactory = new WorldObjectFactory();
+    objectBar.addObject(objFactory.createObject(OBJ_WALL));
+    objectBar.addObject(objFactory.createObject(OBJ_START));
 
     // Input
     mapNameInputElement = select('#worldMapName_input');
@@ -51,14 +56,6 @@ var EditorScreen = function (canvas, worldMap) {
     );
     mousePrePosition = createVector(worldCamera.Position.x, worldCamera.Position.y, 0);
 
-    //pre-calculate light vectors
-    var mapCenterX = worldMap.Width * TILE_SIZE / 2;
-    pointLightPos = createVector(mapCenterX, -300, 100)
-    lightDirection =
-      createVector(mapCenterX, 0, 0).sub(
-        createVector(mapCenterX, pointLightPos.y, 1000)
-      ).normalize();
-
     // property and fields values
     isPaused = false;
   }
@@ -74,20 +71,16 @@ var EditorScreen = function (canvas, worldMap) {
     background("#26263A");
 
     // display FPS on screen
-    fpsCounterElement.html(frameRate());
+    fpsCounterElement.html(round(frameRate()));
 
     // use camera
     worldCamera.use();
 
-    var mousepos = this.mouseToXYPlane();
-
-    // lights
-    pointLight(255, 255, 255, pointLightPos);
-    directionalLight(200, 200, 200, lightDirection);
-    ambientLight(255);
-
     // draw world
     worldMap.draw();
+
+    // testing mouse position ...
+    var mousepos = mouseToXYPlane(canvas, worldCamera);
 
     push();
     noStroke();
@@ -108,20 +101,17 @@ var EditorScreen = function (canvas, worldMap) {
     ellipse(mousepos.x, mousepos.y, TILE_SIZE * 0.8, TILE_SIZE * 0.8);
     pop();
 
+    // draw axes
     stroke(255, 0, 0); line(0, 0, 0, 1000, 0, 0); // RED   - x axis
     stroke(0, 255, 0); line(0, 0, 0, 0, 1000, 0); // GREEB - Y axis
     stroke(0, 0, 255); line(0, 0, 0, 0, 0, 1000); // BLUE  - z axis
-
-    // var t = this.mouseToXYPlane();
-    // stroke(255, 0, 255); line(
-    //   mousePrePosition.x, mousePrePosition.y, mousePrePosition.z + 10,
-    //   t.x, t.y, 10);
   }
 
   this.hide = function () {
     // code to hide and pouse act screen
     this.editorDivElement.hide();
     canvas.hide();
+    objectBar.pause();
     isPaused = true;
   }
 
@@ -129,6 +119,7 @@ var EditorScreen = function (canvas, worldMap) {
     // code to restore hiden screen
     this.editorDivElement.show();
     canvas.hide();
+    objectBar.upPause();
     isPaused = false;
   }
 
@@ -154,7 +145,6 @@ var EditorScreen = function (canvas, worldMap) {
   this.touchStartedEvent = function () {
     isCamMoving = true;
     mousePrePosition = createVector(mouseX, mouseY);
-    // mousePrePosition = this.mouseToXYPlane();
     cursor(HAND);
   }
 
@@ -165,11 +155,6 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.touchMovedEvent = function() {
     if (!isCamMoving) return;
-    // var newPos = this.mouseToXYPlane();
-    // console.log(newPos);
-    // console.log(mousePrePosition);
-    // console.log(mousePrePosition.copy().sub(newPos));
-    // worldCamera.move(mousePrePosition.copy().sub(newPos));
 
     var newPos = createVector(mouseX, mouseY);
     worldCamera.move(
@@ -179,21 +164,5 @@ var EditorScreen = function (canvas, worldMap) {
     );
 
     mousePrePosition = newPos;
-  }
-
-  this.mouseToXYPlane = function() {
-    // x(t) = worldCamera.x + delta.x * t
-    // y(t) = worldCamera.y + delta.y * t
-    // z(t) = worldCamera.z + delta.z * t
-    // -----------------------------------
-    // 0 = worldCamera.z + delta.z * t
-    // t = worldCamera.z / -delta.z
-    //
-
-    var mouseWorld = projectCanvasToWorld(canvas, createVector(mouseX, mouseY));
-    var delta = mouseWorld.sub(worldCamera.Position);
-
-    return worldCamera.Position.copy()
-      .add(delta.mult(worldCamera.Position.z / -delta.z));
   }
 }

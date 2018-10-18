@@ -2,12 +2,10 @@
 // Project: ITU project: Game "Snake in 3D" (UX prototype)
 // Author: Petr Fusek
 // File: utils.js
-// function for transforming mouse on screen to mouse in the world
-// taken from https://github.com/processing/p5.js/issues/1553
-//
+// Utility functions for project
 
-/* Multiply a 4x4 homogeneous matrix by a Vector4 considered as point
- * (ie, subject to translation). */
+// Multiply a 4x4 homogeneous matrix by a Vector4 considered as point (ie, subject to translation).
+// taken from https://github.com/processing/p5.js/issues/1553
 function multMatrixVector(m, v) {
   if (!(m instanceof p5.Matrix) || !(v instanceof p5.Vector)) {
     print('multMatrixVector : Invalid arguments');
@@ -30,7 +28,8 @@ function multMatrixVector(m, v) {
   return _dest;
 }
 
-/* Project a vector from Canvas to World coordinates. */
+// Project a vector from Canvas to World coordinates
+// taken from https://github.com/processing/p5.js/issues/1553
 function projectCanvasToWorld(canvas, vCanvas) {
   // Retrieve the ModelView and Projection matrices.
   var mv = canvas.uMVMatrix.copy();
@@ -55,7 +54,8 @@ function projectCanvasToWorld(canvas, vCanvas) {
   return vWorld;
 }
 
-/* Project a vector from World to Canvas coordinates. */
+// Project a vector from World to Canvas coordinates
+// taken from https://github.com/processing/p5.js/issues/1553
 function projectWorldToCanvas(canvas, vWorld) {
   // Calculate the ModelViewProjection Matrix.
   var mvp = (canvas.uMVMatrix.copy()).mult(canvas.uPMatrix);
@@ -70,4 +70,21 @@ function projectWorldToCanvas(canvas, vWorld) {
   vCanvas.z = 0.5 * (vNDC.z + 1.0);
 
   return vCanvas;
+}
+
+// returns a 2d vector of mouse projected on XY plane in actual view.
+function mouseToXYPlane(canvas, camera) {
+  // x(t) = worldCamera.x + delta.x * t
+  // y(t) = worldCamera.y + delta.y * t
+  // z(t) = worldCamera.z + delta.z * t
+  // -----------------------------------
+  // 0 = worldCamera.z + delta.z * t
+  // t = worldCamera.z / -delta.z
+  //
+
+  var mouseWorld = projectCanvasToWorld(canvas, createVector(mouseX, mouseY));
+  var delta = mouseWorld.sub(camera.Position);
+
+  return camera.Position.copy()
+    .add(delta.mult(camera.Position.z / -delta.z));
 }

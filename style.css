@@ -1,11 +1,8 @@
 body {
-  padding: 0; 
-  margin: 0;
-  background-color: black;
+  padding: 0; margin: 0;
 }
 
 .screen {
-  margin: auto;
   width: 1240px;
   height: 720px;
   display: none;

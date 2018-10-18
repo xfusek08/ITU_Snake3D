@@ -16,10 +16,14 @@
 
 #mainMenuScreenDiv .exitButton {
   float: right;
-  background-image: url("resources/exitButton.png");
+  background-image: url("res/cross.png");
   height: 30px;
   width: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   border-radius: 50%;
+  border: 2px solid #d4d4d4;
 }
 
 #mainMenuScreenDiv .menu {
@@ -42,13 +46,13 @@
 }
 
 #mainMenuScreenDiv .mapImg {
-  /*float: left;*/
   height: 150px;
   width: 200px;
-  /*margin-left: -100%;*/
 }
 
 #mainMenuScreenDiv .addButton {
+  height: 150px;
+  width: 200px;
   margin: 2%;
   clear: both;
   text-align: center;
@@ -57,18 +61,17 @@
 
 #mainMenuScreenDiv .addButton p {
   margin: auto;
-  margin-top: 25%; 
+  margin-top: 15%; 
 }
 
 #mainMenuScreenDiv .addImg {
   height: 120px;
   width: 120px;
   border-radius: 50%;
-  background-image: url("resources/addButton.png");
+  background-image: url("res/addButton.png");
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15%;
-  margin-bottom: -10%;
+  margin-top: 5%;
 }
 
 #mainMenuScreenDiv .play, #mainMenuScreenDiv .edit {

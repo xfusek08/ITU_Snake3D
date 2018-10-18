@@ -14,6 +14,20 @@ var MainMenuScreen = function() {
     this.mainMenuDiv = select('#mainMenuScreenDiv');
     this.mainMenuDiv.show();
     generateMenu();
+
+    var playButtons = document.getElementsByClassName("play");
+    var editButtons = document.getElementsByClassName("edit");
+    var addButton = document.getElementsByClassName("addImg");
+
+    //adding events to elements
+    for(var i = 0; i < playButtons.length; ++i) {
+      playButtons[i].addEventListener("mouseover", playHover, false);
+      playButtons[i].addEventListener("mouseleave", playLeave, false);
+      editButtons[i].addEventListener("mouseover", playHover, false);
+      editButtons[i].addEventListener("mouseleave", playLeave, false);
+    }
+    addButton[0].addEventListener("mouseover", addHover, false);
+    addButton[0].addEventListener("mouseleave", addLeave, false);
   }
 
   this.deinit = function () {
@@ -92,12 +106,80 @@ var MainMenuScreen = function() {
   //will load from file later
   function loadMaps() {
     var mapArray = [];
-    var map = {'src': 'resources/emptyMap.png', 'name': 'Empty'};
+    var map = {'src': 'res/emptyMap.png', 'name': 'Empty'};
     mapArray.push(map);
-    map = {'src': 'resources/notEmptyMap.png', 'name': 'Full'};
+    map = {'src': 'res/notEmptyMap.png', 'name': 'Full'};
     mapArray.push(map);
-    map = {'src': 'resources/userCreated.png', 'name': 'Custom'};
+    map = {'src': 'res/userCreated.png', 'name': 'Custom'};
     mapArray.push(map);
     return mapArray;
+  }
+
+  function playHover(event) {
+    var myTarget = event.target;
+    var comrade = null;
+    var playButtons;
+    var editButtons;
+
+    if(myTarget.className == "play") {
+      myTarget.style.backgroundImage = "url('res/selPLay.png')";
+      myTarget.style.borderRight = "2px solid #d4d4d4";
+      playButtons = document.getElementsByClassName("play");
+      for(var i = 0; i < playButtons.length; ++i) {
+        if(myTarget == playButtons[i]) {
+          comrade = i;
+        }
+      }
+      editButtons = document.getElementsByClassName("edit");
+      editButtons[comrade].style.background = "rgba(0, 0, 0, 0.1)";
+      editButtons[comrade].style.backgroundImage = "url('res/notSelEdit.png')";
+      editButtons[comrade].style.borderLeft = "2px solid #d4d4d4";
+    }
+    else {
+      myTarget.style.backgroundImage = "url('res/selEdit.png')";
+      myTarget.style.borderLeft = "2px solid #d4d4d4";
+      editButtons = document.getElementsByClassName("edit");
+      for(var i = 0; i < editButtons.length; ++i) {
+        if(myTarget == editButtons[i]) {
+          comrade = i;
+        }
+      }
+      playButtons = document.getElementsByClassName("play");
+      playButtons[comrade].style.background = "rgba(0, 0, 0, 0.1)";
+      playButtons[comrade].style.backgroundImage = "url('res/notSelPLay.png')";
+      playButtons[comrade].style.borderRight = "2px solid #d4d4d4";
+    }
+  }
+
+  function playLeave(event) {
+    var myTarget = event.target;
+    var buttons;
+
+    myTarget.style.backgroundImage = "";
+    myTarget.style.border = "";
+    myTarget.style.background = "";
+
+    if(myTarget.className == "play")
+      buttons = document.getElementsByClassName("play");
+    else
+      buttons = document.getElementsByClassName("edit");
+    for(var i = 0; i < buttons.length; ++i)
+      if(myTarget == buttons[i])
+        comrade = i;
+    if(myTarget.className == "edit")
+      buttons = document.getElementsByClassName("play");
+    else
+      buttons = document.getElementsByClassName("edit");
+    buttons[comrade].style.background = "";
+    buttons[comrade].style.backgroundImage = "";
+    buttons[comrade].style.border = "";
+  }
+
+  function addHover(event) {
+    event.target.style.backgroundImage = "url('res/addButtonSel.png')";
+  }
+
+  function addLeave(event) {
+    event.target.style.backgroundImage = "url('res/addButton.png')";
   }
 }

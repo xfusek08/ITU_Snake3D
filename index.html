@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake3D</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="editor_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/common_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/editor_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/editorHelp_styles.css">
 
     <!-- utils and constants files -->
     <script src="src/constants.js"></script>
@@ -29,6 +30,7 @@
     <script src="src/editor/ObjectBarItem.js"></script>
 
     <!-- screens  -->
+    <script src="src/screens/EditorHelpScreen.js"></script>
     <script src="src/screens/EditorScreen.js"></script>
     <script src="src/screens/MainMenuScreen.js"></script>
 
@@ -42,7 +44,7 @@
 
       <div id="editor_objectbar"></div>
 
-      <div id="editor_topbar">
+      <div class="topbar" id="editor_topbar">
         <table>
           <td></td>
           <td class="nameCell"><input type="text" id="worldMapName_input" /></td>
@@ -51,6 +53,39 @@
           <td class="buttonCell"><div class="topBarButton" id="exitTopButton"></div></td>
         </table>
       </div>
+    </div>
+    <div class="screen" id="editorHelpScreenDiv">
+      <div class="helprectangle" id="objbar_help"></div>
+      <div class="heplarrow" id="objbar_help_arrow"></div>
+      <div class="heplarrow" id="name_help_arrow"></div>
+      <div class="heplarrow" id="topbarbuttons_help_arrow"></div>
+      <div class="helptext" id="ojbbar_help_text"><u>Panel objektů,</u> které je možné umístit na herní mapu. Kliknutím vyberte objekt, potom klinutím do herního pole nebo tahem po herním poly umístěte objekt(y) na vybrané pozice</div>
+      <div class="helptext" id="name_help_text"><u>Jméno mapy</u>, zde se zadá jméno aktuální mapy, pod kterým bude uložena.</div>
+      <div class="helptext" id="topbarbuttons_help_text">
+        Uložení mapy<br><br>
+        Zobrazí tuto nápovědu<br><br>
+        Ukončení editoru a návrat na
+        hlavní obrazovku
+      </div>
+      <div class="helprectangle" id="control_help"></div>
+      <div class="helptext" id="control_help_text_caption">Ovládání</div>
+      <div class="heplarrow" id="control_help_icons"></div>
+      <div class="helptext" id="control_help_text">
+        Kolečko nahoru nebo dolů přibližuje nebo oddaluje<br><br>
+        Držením tlačítka a tahem pohybuje mapou vlevo nebo vpravo<br><br>
+        Levým tlačítkem vybíráte
+        a umisťujete přetažením objekty z panelu objektů.
+      </div>
+      <div class="topbar" id="nameinput_help_bar">
+        <table>
+          <td></td>
+          <td class="nameCell"><div class="helprectangle"></div></td>
+          <td class="buttonCell"><div></div></td>
+          <td class="buttonCell"><div></div></td>
+          <td class="buttonCell"><div></div></td>
+        </table>
+      </div>
+
     </div>
     <div class="screen" id="gameScreenDiv"></div>
     <span id="fpscounter"></span>

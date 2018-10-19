@@ -55,7 +55,7 @@ var WorldObjectFactory = function () {
 
 
   this.createDeleteObject = function () {
-    return new WorldObject("Smazat", OBJ_DELETE, function (sketch) {
+    return new WorldObject("Smazat (jako že guma)", OBJ_DELETE, function (sketch) {
       if (sketch == null) { // global mode
         ambientMaterial(244, 197, 66);
         specularMaterial(244, 197, 66);

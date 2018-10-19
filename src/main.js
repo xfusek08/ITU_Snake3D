@@ -66,3 +66,11 @@ function touchStarted() {
 function touchEnded() {
   screenStack.topScreen.touchEndedEvent();
 }
+
+function keyPressed() {
+  screenStack.topScreen.keyPressedEvent();
+}
+
+function keyReleased() {
+  screenStack.topScreen.keyReleasedEvent();
+}

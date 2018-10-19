@@ -6,27 +6,27 @@
 }
 
 
-#editor_topbar {
+.topbar {
   width: 100%;
   padding-bottom: 20px;
 }
 
-#editor_topbar table {
+.topbar table {
   width: 100%;
 }
 
-#editor_topbar table td:first-child {
+.topbar table td:first-child {
   width: 10%;
 }
 
-#editor_topbar .nameCell {
+.topbar .nameCell {
   width:90%;
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;
 }
 
-#editor_topbar #worldMapName_input {
+.topbar #worldMapName_input {
   border: 3px solid #5A5A92;
   border-radius: 100px;
   width: 100%;
@@ -37,20 +37,20 @@
 }
 
 #editor_objectbar,
-#editor_topbar #worldMapName_input {
+.topbar #worldMapName_input {
   background: rgba(10, 10, 30, 0.7);
 }
 
-#editor_topbar #worldMapName_input:focus {
+.topbar #worldMapName_input:focus {
   outline: 0;
 }
 
-#editor_topbar .buttonCell {
+.topbar .buttonCell {
   padding: 10px;
   padding-left: 2px;
 }
 
-#editor_topbar .topBarButton {
+.topbar .topBarButton {
   border: 2.4px white solid;
   width: 20px;
   height: 20px;
@@ -61,17 +61,25 @@
   background-position: center;
 }
 
-#editor_topbar #saveTopButton {
-  background-image: url("res/save.png");
+.topbar .topBarButton:hover {
+  cursor: pointer;
+  background-color: rgba(255,255,255,0.52);
+  -webkit-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  -moz-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
 }
 
-#editor_topbar #helpTopButton {
-  background-image: url("res/questionmark.png");
+.topbar #saveTopButton {
+  background-image: url("../img/save.png");
+}
+
+.topbar #helpTopButton {
+  background-image: url("../img/questionmark.png");
   background-size: 70%;
 }
 
-#editor_topbar #exitTopButton {
-  background-image: url("res/cross.png");
+.topbar #exitTopButton {
+  background-image: url("../img/cross.png");
 }
 
 #editor_canvas_div {

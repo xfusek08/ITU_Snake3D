@@ -24,12 +24,6 @@ var WorldMap = function (
     .normalize();
 
   this.draw = function() {
-
-    // push();
-    // translate(this.PointLightPos);
-    // sphere(50);
-    // pop();
-
     // lights
     pointLight(255, 255, 255, this.PointLightPos);
     directionalLight(200, 200, 200, this.LightDirection);
@@ -86,14 +80,19 @@ var WorldMap = function (
     pop();
   }
 
-  this.placeObject = function(x, y, worldObj) {
-    if (!(worldObj instanceof WorldObject))
-      throw "WorldMap has to take  worldObj as parameter";
+  this.placeObject = function(x, y, obj) {
+    var type = 0;
+    if (obj instanceof WorldObject)
+      type = obj.Type;
+    else if (!isNaN(obj))
+      type = obj;
+    else
+      throw "WorldMap has to take worldObj or worldObjtype as parameter";
 
-    if (x < 0 || x > this.Width  || y < 0 || y > this.Heigth)
+    if (x <= 0 || x > this.Width  || y <= 0 || y > this.Heigth)
       return;
 
-    switch (worldObj.Type) {
+    switch (type) {
       case OBJ_WALL:
         if (this.StartPosition !== null)
           if (this.StartPosition.X == x && this.StartPosition.Y == y)
@@ -105,10 +104,13 @@ var WorldMap = function (
           this.StartPosition = new WorldPosition(x, y);
         break;
       case OBJ_DELETE:
-        if (this.StartPosition !== null)
+        if (this.StartPosition !== null) {
           if (this.StartPosition.X == x && this.StartPosition.Y == y)
             this.StartPosition = null;
-        this.WallPlacement[[x, y]] = false;
+        }
+        if (this.WallPlacement[[x, y]])
+          delete this.WallPlacement[[x, y]];
+        break;
     }
   }
 

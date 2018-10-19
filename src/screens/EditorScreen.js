@@ -33,6 +33,8 @@ var EditorScreen = function (canvas, worldMap) {
 
   // intilatization of screen
   this.init = function () {
+    console.log("editor init");
+
     // Main Screen
     editorDivElement = select('#editorScreenDiv');
     editorDivElement.show();
@@ -51,11 +53,16 @@ var EditorScreen = function (canvas, worldMap) {
 
     objectBar.ParentElement.mouseOver(this.mouseEnterGUIElementEvent);
     objectBar.ParentElement.mouseOut(this.mouseLeaveGUIElementEvent);
+
+    // top bar events
     var topBarElement = select("#editor_topbar");
     topBarElement.mouseOver(this.mouseEnterGUIElementEvent);
     topBarElement.mouseOut(this.mouseLeaveGUIElementEvent);
+    select("#saveTopButton").mouseClicked(this.saveClickEvent);
+    select("#helpTopButton").mouseClicked(this.helpClickEvent);
+    select("#exitTopButton").mouseClicked(this.exitClickEvent);
 
-    // Input
+    // top bar Input
     mapNameInputElement = select('#worldMapName_input');
     mapNameInputElement.value(worldMap.Name);
     mapNameInputElement.input(this.nameChangedEvent); // bind event on value change
@@ -127,14 +134,13 @@ var EditorScreen = function (canvas, worldMap) {
     }
 
     // draw axes
-    stroke(255, 0, 0); line(0, 0, 0, 1000, 0, 0); // RED   - x axis
-    stroke(0, 255, 0); line(0, 0, 0, 0, 1000, 0); // GREEB - Y axis
-    stroke(0, 0, 255); line(0, 0, 0, 0, 0, 1000); // BLUE  - z axis
+    // stroke(255, 0, 0); line(0, 0, 0, 1000, 0, 0); // RED   - x axis
+    // stroke(0, 255, 0); line(0, 0, 0, 0, 1000, 0); // GREEB - Y axis
+    // stroke(0, 0, 255); line(0, 0, 0, 0, 0, 1000); // BLUE  - z axis
   }
 
   this.hide = function () {
     // code to hide and pouse act screen
-    editorDivElement.hide();
     noLoop();
     objectBar.pause();
     isPaused = true;
@@ -142,8 +148,6 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.show = function () {
     // code to restore hiden screen
-    editorDivElement.show();
-    canvas.show();
     loop();
     objectBar.unPause();
     isPaused = false;
@@ -151,12 +155,13 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.deinit = function () {
     this.hide();
+    canvas.hide();
+    editorDivElement.hide();
   }
 
   // DOM events
   this.nameChangedEvent = function () {
     worldMap.Name = mapNameInputElement.value();
-    console.log("name changed to: " + worldMap.Name);
   }
 
   this.ObjectSelectedEvent = function (selectedWorldObj) {
@@ -176,6 +181,20 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.mouseLeaveGUIElementEvent = function () {
     isMouseOnCanvas = true;
+  }
+
+  this.saveClickEvent = function() {
+    console.log("saveClickEvent");
+  }
+
+  this.helpClickEvent = function () {
+    console.log("helpClickEvent");
+    screenStack.pushScreen(new EditorHelpScreen());
+
+  }
+
+  this.exitClickEvent = function () {
+    console.log("exitClickEvent");
   }
 
   // movement Events
@@ -230,6 +249,10 @@ var EditorScreen = function (canvas, worldMap) {
       this.dropObjOnWorld();
     }
   }
+
+  this.keyPressedEvent = function () { }
+
+  this.keyReleasedEvent = function () { }
 
   // Dropping mechanics
   this.getMouseTileCoords = function() {

@@ -105,7 +105,6 @@ var EditorScreen = function (canvas, worldMap) {
     // draw world
     worldMap.draw();
 
-
     // draw selected element hovering over user cursor
     if (selectedObject !== null) {
       if (isMouseOnCanvas) {

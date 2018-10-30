@@ -44,8 +44,8 @@ function projectCanvasToWorld(canvas, vCanvas) {
   // Transform the canvas vector to Normalized Device Coordinates (in [-1, 1]³),
   // Here viewport is (0, 0, drawingBufferWidth, drawingBufferHeight).
   var vNDC = createVector();
-  vNDC.x = (-1.0 + 2.0 * (vCanvas.x / canvas.GL.drawingBufferWidth));
-  vNDC.y = -(-1.0 + 2.0 * (vCanvas.y / canvas.GL.drawingBufferHeight));
+  vNDC.x = (-1.0 + 2.0 * (vCanvas.x / windowWidth));
+  vNDC.y = -(-1.0 + 2.0 * (vCanvas.y / windowHeight));
   vNDC.z = (-1.0 + 2.0 * (vCanvas.z));
 
   // Transform vector from NDC to world coordinates.
@@ -65,8 +65,8 @@ function projectWorldToCanvas(canvas, vWorld) {
 
   // Transform vector from NDC to Canvas coordinates.
   var vCanvas = createVector();
-  vCanvas.x = 0.5 * (vNDC.x + 1.0) * canvas.GL.drawingBufferWidth;
-  vCanvas.y = 0.5 * (vNDC.y + 1.0) * canvas.GL.drawingBufferHeight;
+  vCanvas.x = 0.5 * (vNDC.x + 1.0) * windowWidth;
+  vCanvas.y = 0.5 * (vNDC.y + 1.0) * windowHeight;
   vCanvas.z = 0.5 * (vNDC.z + 1.0);
 
   return vCanvas;

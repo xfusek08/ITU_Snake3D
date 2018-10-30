@@ -7,6 +7,7 @@
 var MainMenuScreen = function (canvas) {
 
   this.mainMenuDiv = null;
+  var mapArray = null;
 
   // public
   this.init = function () {
@@ -47,7 +48,7 @@ var MainMenuScreen = function (canvas) {
   }
 
   function generateMenuMaps() {
-    var mapArray = loadMaps();
+    mapArray = loadMaps();
     var map;
     var play;
     var edit;
@@ -121,6 +122,7 @@ var MainMenuScreen = function (canvas) {
     }
     addButton[0].addEventListener("mouseover", addHover, false);
     addButton[0].addEventListener("mouseleave", addLeave, false);
+    addButton[0].addEventListener("click", clickAdd, false);
   }
 
   //will load from file later
@@ -230,7 +232,17 @@ var MainMenuScreen = function (canvas) {
     event.target.style.backgroundImage = "url('res/img/addButton.png')";
   }
 
-  function clickEdit() {
+  function clickEdit(event) {
+    var myTarget = event.target;
+    var name = "";
+    buttons = document.getElementsByClassName("edit");
+    for (var i = 0; i < buttons.length; ++i)
+      if (myTarget == buttons[i])
+        name = mapArray[i].name;
+    screenStack.pushScreen(new EditorScreen(canvas, new WorldMap(name, 30, 20)));
+  }
+
+  function clickAdd() {
     screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('User map 1', 30, 20)));
   }
 }

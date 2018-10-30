@@ -8,6 +8,7 @@ var MainMenuScreen = function (canvas) {
 
   this.mainMenuDiv = null;
   var mapArray = null;
+  var myMaps = null;
 
   // public
   this.init = function () {
@@ -15,6 +16,7 @@ var MainMenuScreen = function (canvas) {
     this.mainMenuDiv = select('#mainMenuScreenDiv');
     this.mainMenuDiv.show();
     generateMenu();
+    myMaps = createMaps();
     addEvents();
   }
 
@@ -49,6 +51,7 @@ var MainMenuScreen = function (canvas) {
 
   function generateMenuMaps() {
     mapArray = loadMaps();
+    this.mapArray = mapArray;
     var map;
     var play;
     var edit;
@@ -135,6 +138,38 @@ var MainMenuScreen = function (canvas) {
     map = { 'src': 'res/img/notEmptyMap.png', 'name': 'Full' };
     mapArray.push(map);
     map = { 'src': 'res/img/userCreated.png', 'name': 'Custom' };
+    mapArray.push(map);
+    return mapArray;
+  }
+
+  function createMaps() {
+    var mapArray = [];
+    var map = new WorldMap(this.mapArray[0].name, 20, 30)
+    mapArray.push(map);
+    map = new WorldMap(this.mapArray[1].name, 20, 30)
+    for(var i = 1; i < 31; i++){
+      map.placeObject(1,i,OBJ_WALL);
+      map.placeObject(20,i,OBJ_WALL);
+    }
+    for(var i = 1; i < 21; i++){
+      map.placeObject(i,1,OBJ_WALL);
+      map.placeObject(i,30,OBJ_WALL);
+    }
+    mapArray.push(map);
+    map = new WorldMap(this.mapArray[2].name, 20, 30)
+    for(var i = 1; i < 31; i++){
+      map.placeObject(1,i,OBJ_WALL);
+      map.placeObject(20,i,OBJ_WALL);
+    }
+    for(var i = 1; i < 21; i++){
+      map.placeObject(i,1,OBJ_WALL);
+      map.placeObject(i,30,OBJ_WALL);
+    }
+    map.placeObject(11,16,OBJ_WALL);
+    map.placeObject(11,15,OBJ_WALL);
+    map.placeObject(11,14,OBJ_WALL);
+    map.placeObject(12,16,OBJ_WALL);
+    map.placeObject(13,16,OBJ_WALL);
     mapArray.push(map);
     return mapArray;
   }
@@ -234,18 +269,26 @@ var MainMenuScreen = function (canvas) {
     event.target.style.backgroundImage = "url('res/img/addButton.png')";
   }
 
-  function clickPlay() {
-    screenStack.pushScreen(new GameScreen());
+  function clickPlay(event) {
+    var myTarget = event.target;
+    var pos = 0;
+    buttons = document.getElementsByClassName("play");
+    for (var i = 0; i < buttons.length; ++i)
+      if (myTarget == buttons[i]) {
+        pos = i;
+      }
+    screenStack.pushScreen(new GameScreen(canvas, myMaps[pos]));
   }
 
   function clickEdit(event) {
     var myTarget = event.target;
-    var name = "";
+    var pos = 0;
     buttons = document.getElementsByClassName("edit");
     for (var i = 0; i < buttons.length; ++i)
-      if (myTarget == buttons[i])
-        name = mapArray[i].name;
-    screenStack.pushScreen(new EditorScreen(canvas, new WorldMap(name, 30, 20)));
+      if (myTarget == buttons[i]) {
+        pos = i;
+      }
+    screenStack.pushScreen(new EditorScreen(canvas, myMaps[pos]));
   }
 
   function clickDelete() {

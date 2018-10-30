@@ -114,11 +114,13 @@ var MainMenuScreen = function (canvas) {
     for (var i = 0; i < playButtons.length; ++i) {
       playButtons[i].addEventListener("mouseover", playHover, false);
       playButtons[i].addEventListener("mouseleave", playLeave, false);
+      playButtons[i].addEventListener("click", clickPlay, false);
       editButtons[i].addEventListener("mouseover", playHover, false);
       editButtons[i].addEventListener("mouseleave", playLeave, false);
       editButtons[i].addEventListener("click", clickEdit, false);
       deleteButtons[i].addEventListener("mouseover", deleteHover, false);
       deleteButtons[i].addEventListener("mouseleave", deleteLeave, false);
+      deleteButtons[i].addEventListener("click", clickDelete, false);
     }
     addButton[0].addEventListener("mouseover", addHover, false);
     addButton[0].addEventListener("mouseleave", addLeave, false);
@@ -232,6 +234,10 @@ var MainMenuScreen = function (canvas) {
     event.target.style.backgroundImage = "url('res/img/addButton.png')";
   }
 
+  function clickPlay() {
+    screenStack.pushScreen(new GameScreen());
+  }
+
   function clickEdit(event) {
     var myTarget = event.target;
     var name = "";
@@ -240,6 +246,11 @@ var MainMenuScreen = function (canvas) {
       if (myTarget == buttons[i])
         name = mapArray[i].name;
     screenStack.pushScreen(new EditorScreen(canvas, new WorldMap(name, 30, 20)));
+  }
+
+  function clickDelete() {
+    //deleting map
+    //refresing menu (generateMenu, addEvents)
   }
 
   function clickAdd() {

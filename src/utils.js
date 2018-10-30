@@ -82,7 +82,7 @@ function mouseToXYPlane(canvas, camera) {
   // t = worldCamera.z / -delta.z
   //
 
-  var mouseWorld = projectCanvasToWorld(canvas, createVector(mouseX, mouseY));
+  var mouseWorld = projectCanvasToWorld(canvas, createVector(pmouseX, pmouseY));
   var delta = mouseWorld.sub(camera.Position);
 
   return camera.Position.copy()

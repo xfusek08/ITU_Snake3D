@@ -4,7 +4,7 @@
 // File: MainMenuScreen.js
 // Type of screen witch displays main menu
 
-var MainMenuScreen = function () {
+var MainMenuScreen = function (canvas) {
 
   this.mainMenuDiv = null;
 
@@ -115,6 +115,7 @@ var MainMenuScreen = function () {
       playButtons[i].addEventListener("mouseleave", playLeave, false);
       editButtons[i].addEventListener("mouseover", playHover, false);
       editButtons[i].addEventListener("mouseleave", playLeave, false);
+      editButtons[i].addEventListener("click", clickEdit, false);
       deleteButtons[i].addEventListener("mouseover", deleteHover, false);
       deleteButtons[i].addEventListener("mouseleave", deleteLeave, false);
     }
@@ -227,5 +228,9 @@ var MainMenuScreen = function () {
 
   function addLeave(event) {
     event.target.style.backgroundImage = "url('res/img/addButton.png')";
+  }
+
+  function clickEdit() {
+    screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('User map 1', 30, 20)));
   }
 }

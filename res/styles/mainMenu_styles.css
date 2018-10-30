@@ -14,18 +14,6 @@
   user-select: none;
 }
 
-#mainMenuScreenDiv .exitButton {
-  float: right;
-  background-image: url("../img/cross.png");
-  height: 30px;
-  width: 30px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 50%;
-  border: 2px solid #d4d4d4;
-}
-
 #mainMenuScreenDiv .menu {
   display: flex;
   justify-content: left;

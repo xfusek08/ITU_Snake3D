@@ -9,6 +9,8 @@ var ObjectBar = function (parent) {
 
   this.ParentElement = parent;
 
+  var element = null;
+
   this.addObject = function (worldObject) {
     if (!(worldObject instanceof WorldObject))
       throw "ObjectBar.addObject() parameter has to be instance of worldObject";
@@ -45,14 +47,28 @@ var ObjectBar = function (parent) {
     });
   }
 
+  this.unSelectObject = function() {
+    this.Objects.forEach(element => element.Parent.removeClass("selected"));
+    onSelectionEvent(null)
+  }
+
   this.onObjectSelection = function (onSelectionfunc) {
     if (typeof onSelectionfunc !== "function")
       throw "ObjectBar.onObjectSelection() can take only functions";
 
     onSelectionEvent = onSelectionfunc;
-  };
+  }
+
+  this.deinit = function () {
+    selectAll(".objectBarItemDiv").forEach(element => {
+      element.remove();
+    });
+    selectAll(".delimiter").forEach(element => {
+      element.remove();
+    });
+  }
 
   // internal event handlers
-  var onSelectionEvent = function (obj) { };
+  var onSelectionEvent = function (obj) { }
 
 }

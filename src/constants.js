@@ -8,6 +8,7 @@ const DEFAULT_WORLD_SIZE = 20;
 const TILE_SIZE = 20;
 const MIN_CAMERA_Z = 180;
 const MAX_CAMERA_Z = 400;
+const MAX_WORLD_SIZE = 50;
 
 // type of objects: 50000
 const OBJ_WALL    = 50001;

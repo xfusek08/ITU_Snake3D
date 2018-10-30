@@ -53,13 +53,24 @@
 
       <div id="editor_objectbar"></div>
 
-      <div class="topbar" id="editor_topbar">
+      <div class="looseDroppingObject topbar" id="editor_topbar">
         <table>
-          <td></td>
-          <td class="nameCell"><input type="text" id="worldMapName_input" /></td>
-          <td class="buttonCell"><div class="topBarButton" id="saveTopButton"></div></td>
-          <td class="buttonCell"><div class="topBarButton" id="helpTopButton"></div></td>
-          <td class="buttonCell"><div class="topBarButton" id="exitTopButton"></div></td>
+          <tr>
+            <td></td>
+            <td class="nameCell"><input type="text" id="worldMapName_input" /></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="saveTopButton"></div></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="helpTopButton"></div></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="exitTopButton"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td rowspan="4" class="sizeSettingCell">
+              <!-- <span>Rozměry mapy</span> -->
+              <span>Šířka : <input type="number" id="worldXSize_input" min="1" max="50" maxlength="2" /></span>
+              <span>Výška : <input type="number" id="worldYSize_input" min="1" max="50" maxlength="2" /></span>
+              <span class="generalButton" id="useNewSizeButton">Použít</span>
+            </td>
+          </tr>
         </table>
       </div>
     </div>

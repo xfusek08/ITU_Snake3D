@@ -15,6 +15,8 @@ var EditorScreen = function (canvas, worldMap) {
 
   var editorDivElement = null;
   var mapNameInputElement = null;
+  var sizeXInputElement = null;
+  var sizeYInputElement = null;
   var fpsCounterElement = null;
   var objectBar = null;
 
@@ -30,6 +32,18 @@ var EditorScreen = function (canvas, worldMap) {
   var selectedObject = null;
   var isDropping = false;
   var lastDroppedCoords = null;
+
+  // Calculate camera maximal z position relative to actual size of world
+  // based on proportions of defauld values of world size and max Z position.
+  var calculateCamera = function () {
+    maxZPos = 1.2 * (MAX_CAMERA_Z * max(worldMap.Height, worldMap.Width)) / DEFAULT_WORLD_SIZE;
+    worldCamera = new GeneralCamera(
+      worldMap.Width * TILE_SIZE / 2, worldMap.Height * TILE_SIZE / 2, maxZPos,
+      worldMap.Width * TILE_SIZE / 2, worldMap.Height * TILE_SIZE / 2, 0
+    );
+    mousePrePosition = createVector(worldCamera.Position.x, worldCamera.Position.y, 0);
+    mouseOnCanvasPos = mousePrePosition;
+  }
 
   // intilatization of screen
   this.init = function () {
@@ -67,6 +81,18 @@ var EditorScreen = function (canvas, worldMap) {
     mapNameInputElement.value(worldMap.Name);
     mapNameInputElement.input(this.nameChangedEvent); // bind event on value change
 
+    // size setting input
+    sizeXInputElement = select('#worldXSize_input').value(worldMap.Width).input(this.sizeXInputChange);
+    sizeYInputElement = select('#worldYSize_input').value(worldMap.Height).input(this.sizeXInputChange);
+    select('#useNewSizeButton').mouseClicked(this.setMapSizeFromInput);
+
+    // lose selected object on clicking on cancel drop classed object
+    selectAll(".looseDroppingObject").forEach(element => {
+      element.mouseClicked(function () {
+        objectBar.unSelectObject();
+      });
+    });
+
     // FPS Counter
     fpsCounterElement = select('#fpscounter');
 
@@ -74,18 +100,8 @@ var EditorScreen = function (canvas, worldMap) {
     document.oncontextmenu = function () { return false; };
     document.onselectstart = function () { return false; };
 
-    // rendering sections
-
-    // Camera
-    // Calculate camera maximal z position relative to actual size of world
-    // based on proportions of defauld values of world size and max Z position.
-    maxZPos = (MAX_CAMERA_Z * max(worldMap.Heigth, worldMap.Width)) / DEFAULT_WORLD_SIZE;
-    worldCamera = new GeneralCamera(
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, maxZPos,
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, 0
-    );
-    mousePrePosition = createVector(worldCamera.Position.x, worldCamera.Position.y, 0);
-    mouseOnCanvasPos = mousePrePosition;
+    // camera
+    calculateCamera();
 
     this.show();
   }
@@ -155,12 +171,53 @@ var EditorScreen = function (canvas, worldMap) {
   this.deinit = function () {
     this.hide();
     canvas.hide();
+    objectBar.deinit();
     editorDivElement.hide();
+    // remove and replace buttons to reser event handlers
+    var old_element = document.getElementById("editor_topbar");
+    var new_element = old_element.cloneNode(true);
+    old_element.parentNode.replaceChild(new_element, old_element);
   }
 
   // DOM events
   this.nameChangedEvent = function () {
     worldMap.Name = mapNameInputElement.value();
+  }
+
+  this.sizeXInputChange = function () {
+    var val = sizeXInputElement.value();
+    if (val < 0)
+      sizeXInputElement.value(0);
+    else if (val > MAX_WORLD_SIZE)
+      sizeXInputElement.value(MAX_WORLD_SIZE);
+  }
+
+  this.sizeYInputChange = function () {
+    var val = sizeYInputElement.value();
+    if (val < 0)
+      sizeYInputElement.value(0);
+    else if (val > MAX_WORLD_SIZE)
+      sizeYInputElement.value(MAX_WORLD_SIZE);
+  }
+
+  this.setMapSizeFromInput = function () {
+    var w = sizeXInputElement.value();
+    var h = sizeYInputElement.value();
+    var resize = function () {
+      worldMap.Width = w;
+      worldMap.Height = h;
+      worldMap.removeMissplacedObjects();
+      calculateCamera();
+    };
+
+    if (w < worldMap.Width || h < worldMap.Height)
+      (new MessageBox("Chystáte se zmenšit mapu v jednom nebo obou rozměrech. Pokud budete pokračovat, objekty položené mimo nové rozměry budou ztraceny.", MS_BUTTONS_OK_STORNO))
+        .show(resize, function(){
+          sizeXInputElement.value(worldMap.Width);
+          sizeYInputElement.value(worldMap.Height);
+        });
+    else if (w != worldMap.Width || h != worldMap.Height)
+      resize();
   }
 
   this.ObjectSelectedEvent = function (selectedWorldObj) {
@@ -193,8 +250,10 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.exitClickEvent = function () {
     console.log("exitClickEvent");
-    var message = new MessageBox("Opravdu si přejete uložit mapu a odejít na hlavní menu?", MS_BUTTONS_YES_NO);
-    message.show();
+    var message = new MessageBox("Opravdu si přejete vrátit se do hlavního menu a ztratit uložený postup?", MS_BUTTONS_YES_NO);
+    message.show(function () {
+      screenStack.popScreen();
+    });
   }
 
   // movement Events

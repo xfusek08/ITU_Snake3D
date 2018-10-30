@@ -7,12 +7,12 @@
 var WorldMap = function (
   name,
   width = DEFAULT_WORLD_SIZE,
-  heigth = DEFAULT_WORLD_SIZE
+  height = DEFAULT_WORLD_SIZE
 ) {
 
   this.Name = name;
   this.Width = width;
-  this.Heigth = heigth;
+  this.Height = height;
   this.WallPlacement = {};
   this.StartPosition = null;
 
@@ -37,15 +37,15 @@ var WorldMap = function (
     // monolite floor
     ambientMaterial(40, 40, 80);
     specularMaterial(40, 40, 80);
-    rect(0, 0, TILE_SIZE * this.Width, TILE_SIZE * this.Heigth);
+    rect(0, 0, TILE_SIZE * this.Width, TILE_SIZE * this.Height);
 
     // lines
     for (var x = 0; x < this.Width; x++) {
       line(x * TILE_SIZE, 0, 0,
-        x * TILE_SIZE, TILE_SIZE * this.Heigth, 0);
+        x * TILE_SIZE, TILE_SIZE * this.Height, 0);
     }
 
-    for (var y = 0; y < this.Heigth; y++) {
+    for (var y = 0; y < this.Height; y++) {
       line(0, y * TILE_SIZE, 0,
         TILE_SIZE * this.Width, y * TILE_SIZE, 0);
     }
@@ -91,7 +91,7 @@ var WorldMap = function (
     else
       throw "WorldMap has to take worldObj or worldObjtype as parameter";
 
-    if (x <= 0 || x > this.Width  || y <= 0 || y > this.Heigth)
+    if (x <= 0 || x > this.Width  || y <= 0 || y > this.Height)
       return;
 
     switch (type) {
@@ -114,5 +114,19 @@ var WorldMap = function (
           delete this.WallPlacement[[x, y]];
         break;
     }
+  }
+
+  this.removeMissplacedObjects = function() {
+    var todelete = [];
+    for (var pos in this.WallPlacement) {
+      if (this.WallPlacement[pos]) {
+        var coors = pos.split(",");
+        if ((1 * coors[0]) > this.Width || (1 * coors[1]) > this.Height)
+          todelete.push(pos);
+      }
+    }
+    todelete.forEach(pos => {
+      delete this.WallPlacement[pos];
+    });
   }
 }

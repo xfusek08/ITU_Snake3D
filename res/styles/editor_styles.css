@@ -27,17 +27,43 @@
 }
 
 .topbar #worldMapName_input {
+  width: 100%;
+}
+
+.sizeSettingCell {
+  color: white;
+  font-size: 20px;
+  font-family: "Segoe UI";
+  padding-left: 33px;
+}
+
+.sizeSettingCell input[type="text"],
+.sizeSettingCell input[type="number"] {
+  width: 50px;
+}
+
+.sizeSettingCell span {
+  margin-right: 10px;
+}
+
+.topbar input[type="text"],
+.topbar input[type="number"] {
   border: 3px solid #5A5A92;
   border-radius: 100px;
-  width: 100%;
   text-align: center;
   color: white;
   font-size: 20px;
-  font-family: "Segoe UI"
+  font-family: "Segoe UI";
+}
+
+.topbar input[type="text"]:focus,
+.topbar input[type="number"]:focus {
+  outline: none;
 }
 
 #editor_objectbar,
-.topbar #worldMapName_input {
+.topbar input[type="text"],
+.topbar input[type="number"] {
   background: rgba(10, 10, 30, 0.7);
 }
 
@@ -63,10 +89,10 @@
 
 .topbar .topBarButton:hover {
   cursor: pointer;
-  background-color: rgba(255,255,255,0.52);
-  -webkit-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  /* background-color: rgba(10, 10, 30, 0.7); */
+  /* -webkit-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
   -moz-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
-  box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52); */
 }
 
 .topbar #saveTopButton {

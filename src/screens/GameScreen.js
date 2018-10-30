@@ -21,12 +21,12 @@ var GameScreen = function (canvas, worldMap) {
     this.gameScreenDiv.style('background', 'transparent');
 
     resizeCanvas(this.gameScreenDiv.size().width, this.gameScreenDiv.size().height);
-    canvas.show();    
+    canvas.show();
 
-    var maxZPos = (MAX_CAMERA_Z * max(worldMap.Heigth, worldMap.Width)) / DEFAULT_WORLD_SIZE;
+    var maxZPos = (MAX_CAMERA_Z * max(worldMap.Height, worldMap.Width)) / DEFAULT_WORLD_SIZE;
     camera = new GeneralCamera(
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, maxZPos,
-      worldMap.Width * TILE_SIZE / 2, worldMap.Heigth * TILE_SIZE / 2, 0
+      worldMap.Width * TILE_SIZE / 2, worldMap.Height * TILE_SIZE / 2, maxZPos,
+      worldMap.Width * TILE_SIZE / 2, worldMap.Height * TILE_SIZE / 2, 0
     );
     this.show();
   }

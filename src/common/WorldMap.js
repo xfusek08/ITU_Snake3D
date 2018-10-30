@@ -15,8 +15,10 @@ var WorldMap = function (
   this.Height = height;
   this.WallPlacement = {};
   this.StartPosition = null;
+  this.foodPosition = null;
 
   var startObject = (new WorldObjectFactory()).createStartObject();
+  var foodObject = (new WorldObjectFactory()).createAppleObject();
 
   // light positions
   var mapCenterX = this.Width * TILE_SIZE / 2;
@@ -60,6 +62,17 @@ var WorldMap = function (
         0
       );
       startObject.DrawShape(null);
+      pop();
+    }
+
+    if (this.foodPosition !== null) {
+      push();
+      translate(
+        this.foodPosition.X * TILE_SIZE - TILE_SIZE / 2,
+        this.foodPosition.Y * TILE_SIZE - TILE_SIZE / 2,
+        TILE_SIZE / 2
+      );
+      foodObject.DrawShape(null);
       pop();
     }
 
@@ -112,6 +125,10 @@ var WorldMap = function (
         }
         if (this.WallPlacement[[x, y]])
           delete this.WallPlacement[[x, y]];
+        break;
+      case OBJ_APPLE:
+        if (!(this.WallPlacement[[x, y]]))
+          this.foodPosition = new WorldPosition(x, y);
         break;
     }
   }

@@ -20,6 +20,8 @@ var GameScreen = function (canvas, worldMap) {
     this.gameScreenDiv.show();
     this.gameScreenDiv.style('background', 'transparent');
 
+    worldMap.placeObject(5,5,OBJ_APPLE);
+
     resizeCanvas(this.gameScreenDiv.size().width, this.gameScreenDiv.size().height);
     canvas.show();
 

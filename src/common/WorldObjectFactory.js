@@ -6,6 +6,7 @@ var WorldObjectFactory = function () {
       case OBJ_WALL: return this.createWallObject();
       case OBJ_START: return this.createStartObject();
       case OBJ_DELETE: return this.createDeleteObject();
+      case OBJ_APPLE: return this.createAppleObject();
     }
 
   }
@@ -74,6 +75,24 @@ var WorldObjectFactory = function () {
         sketch.translate(20, 0, 0)
         sketch.fill(244, 0, 66);
         sketch.box(10, 20);
+      }
+    });
+  }
+  this.createAppleObject = function () {
+    return new WorldObject("Apple", OBJ_APPLE, function (sketch) {
+      if (sketch == null) {
+        noStroke();
+        ambientMaterial(250, 5, 5);
+        specularMaterial(250, 5, 5);
+        ellipsoid(TILE_SIZE / 2.5, TILE_SIZE / 2, TILE_SIZE / 2.5);
+        ambientMaterial(0, 120, 0);
+        specularMaterial(0, 120, 0);
+        rotateY(PI/10);
+        translate(0, 0, 9)
+        rotateX(-PI/2);
+        cone(4, 7, 4, 1, true)
+      } else {
+        
       }
     });
   }

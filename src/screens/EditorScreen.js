@@ -49,6 +49,7 @@ var EditorScreen = function (canvas, worldMap) {
   this.init = function () {
     console.log("editor init");
 
+    worldMap.placeObject(5,5,OBJ_APPLE);
     // Main Screen
     editorDivElement = select('#editorScreenDiv');
     editorDivElement.show();

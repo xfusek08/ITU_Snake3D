@@ -14,6 +14,7 @@ const MAX_WORLD_SIZE = 50;
 const OBJ_WALL    = 50001;
 const OBJ_START   = 50002;
 const OBJ_DELETE  = 50003;
+const OBJ_APPLE   = 50004;
 
 // type of messagebox buttons: 60000
 const MS_BUTTONS_YES_NO     = 60001;

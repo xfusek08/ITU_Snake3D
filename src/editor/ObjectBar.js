@@ -1,5 +1,9 @@
 
-// object bar
+// Project: ITU project: Game "Snake in 3D" (UX prototype)
+// Author: Petr Fusek
+// File: ObjectBar.js
+// Bar ofselectible objects in editor
+
 var ObjectBar = function (parent) {
   this.Objects = [];
 
@@ -49,6 +53,6 @@ var ObjectBar = function (parent) {
   };
 
   // internal event handlers
-  var onSelectionEvent = function () { };
+  var onSelectionEvent = function (obj) { };
 
 }

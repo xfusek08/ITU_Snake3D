@@ -190,11 +190,12 @@ var EditorScreen = function (canvas, worldMap) {
   this.helpClickEvent = function () {
     console.log("helpClickEvent");
     screenStack.pushScreen(new EditorHelpScreen());
-
   }
 
   this.exitClickEvent = function () {
     console.log("exitClickEvent");
+    var message = new MessageBox("Opravdu si přejete uložit mapu a odejít na hlavní menu?", MS_BUTTONS_YES_NO);
+    message.show();
   }
 
   // movement Events

@@ -9,6 +9,12 @@ const TILE_SIZE = 20;
 const MIN_CAMERA_Z = 180;
 const MAX_CAMERA_Z = 400;
 
-const OBJ_WALL = 1;
-const OBJ_START = 2;
-const OBJ_DELETE = 3;
+// type of objects: 50000
+const OBJ_WALL    = 50001;
+const OBJ_START   = 50002;
+const OBJ_DELETE  = 50003;
+
+// type of messagebox buttons: 60000
+const MS_BUTTONS_YES_NO     = 60001;
+const MS_BUTTONS_OK         = 60002;
+const MS_BUTTONS_OK_STORNO  = 60003;

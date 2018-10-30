@@ -1,3 +1,8 @@
+// Project: ITU project: Game "Snake in 3D" (UX prototype)
+// Author: Petr Fusek
+// File: ObjectBarItem.js
+// Item in object bar.
+// Each item has its own p5 canvas (context) and its animation can be paused or unpaused.
 
 // one item in object bar
 var ObjectBarItem = function (worldObject, parent) {
@@ -25,6 +30,7 @@ var ObjectBarItem = function (worldObject, parent) {
 
       worldObject.DrawShape(sketch);
 
+      // we need to rotate item in same speed independently of frame rate.
       var l = 0.5 / round(sketch.frameRate());
       if (l < 1)
         rotY += l;

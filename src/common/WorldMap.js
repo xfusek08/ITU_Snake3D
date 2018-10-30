@@ -16,6 +16,8 @@ var WorldMap = function (
   this.WallPlacement = {};
   this.StartPosition = null;
 
+  var startObject = (new WorldObjectFactory()).createStartObject();
+
   // light positions
   var mapCenterX = this.Width * TILE_SIZE / 2;
   this.PointLightPos  = createVector(mapCenterX, -300, 100)
@@ -57,7 +59,7 @@ var WorldMap = function (
         this.StartPosition.Y * TILE_SIZE - TILE_SIZE / 2,
         0
       );
-      (new WorldObjectFactory()).createStartObject().DrawShape(null);
+      startObject.DrawShape(null);
       pop();
     }
 
@@ -113,5 +115,4 @@ var WorldMap = function (
         break;
     }
   }
-
 }

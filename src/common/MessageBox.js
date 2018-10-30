@@ -1,12 +1,7 @@
 
 var MessageBox = function(message, buttonType) {
-
-  this.isApproved = false;
-
-  var messageDiv = null;
-
-  this.show = function() {
-    messageDiv = createDiv().parent("#mainbody").class("messageBoxBackgound");
+  this.show = function(onAproove, onCancel) {
+    var messageDiv = createDiv().parent("#mainbody").class("messageBoxBackgound");
     var innerDiv = createDiv().parent(messageDiv).class("messageBox");
 
     // display message
@@ -17,20 +12,37 @@ var MessageBox = function(message, buttonType) {
 
     switch (buttonType) {
       case MS_BUTTONS_OK:
-        createDiv("ok").parent(buttonLine).class("msButton");
+        createDiv("Ok").parent(buttonLine).class("msButton").addClass("approve");
         break;
       case MS_BUTTONS_OK_STORNO:
-        createDiv("ok").parent(buttonLine).class("msButton");
-        createDiv("storno").parent(buttonLine).class("msButton");
+        createDiv("Zrušit").parent(buttonLine).class("msButton").addClass("cancel");
+        createDiv("Ok").parent(buttonLine).class("msButton").addClass("approve");
         break;
       case MS_BUTTONS_YES_NO:
-        createDiv("yes").parent(buttonLine).class("msButton");
-        createDiv("no").parent(buttonLine).class("msButton");
+        createDiv("Ne").parent(buttonLine).class("msButton").addClass("cancel");
+        createDiv("Ano").parent(buttonLine).class("msButton").addClass("approve");
         break;
     }
-  }
 
-  this.hide = function() {
-    messageDiv.remove();
+    innerDiv.position(
+      messageDiv.size().width / 2 - innerDiv.size().width / 2,
+      messageDiv.size().height / 2 - innerDiv.size().height / 2
+    );
+
+    selectAll(".approve").forEach(element => {
+      element.mouseClicked(function () {
+        messageDiv.remove();
+        if (typeof onAproove === "function")
+        onAproove();
+      });
+    });
+
+    selectAll(".cancel").forEach(element => {
+      element.mouseClicked(function () {
+        messageDiv.remove();
+        if (typeof onCancel === "function")
+          onCancel();
+      });
+    });
   }
 }

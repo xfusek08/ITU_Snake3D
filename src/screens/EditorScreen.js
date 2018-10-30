@@ -155,6 +155,7 @@ var EditorScreen = function (canvas, worldMap) {
   this.deinit = function () {
     this.hide();
     canvas.hide();
+    objectBar.deinit();
     editorDivElement.hide();
   }
 
@@ -193,8 +194,10 @@ var EditorScreen = function (canvas, worldMap) {
 
   this.exitClickEvent = function () {
     console.log("exitClickEvent");
-    var message = new MessageBox("Opravdu si přejete uložit mapu a odejít na hlavní menu?", MS_BUTTONS_YES_NO);
-    message.show();
+    var message = new MessageBox("Opravdu si přejete vrátit se do hlavního menu a stratit uložený postup?", MS_BUTTONS_YES_NO);
+    message.show(function () {
+      screenStack.popScreen();
+    });
   }
 
   // movement Events

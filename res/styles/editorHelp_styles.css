@@ -22,7 +22,7 @@
 #editorHelpScreenDiv #name_help_arrow {
   width: 95px;
   height: 250px;
-  left: calc(50% - 100px);
+  left: calc(60% - 100px);
   top: 55px;
   background-size: 100%;
   background-image: url(../img/name_help_arrow.png);
@@ -57,7 +57,7 @@
 #editorHelpScreenDiv #name_help_text {
   height: 60px;
   width: 400px;
-  left: calc(50% - 20px);
+  left: calc(60% - 20px);
   top: 300px;
 }
 

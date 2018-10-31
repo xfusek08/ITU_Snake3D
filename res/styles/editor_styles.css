@@ -74,7 +74,11 @@
 .topbar .buttonCell {
   padding: 10px;
   padding-left: 0px;
-  padding-right: 5px;
+  padding-right: 1px;
+}
+
+.topbar .buttonCell:last-child {
+  padding-right: 13px;
 }
 
 .topbar .topBarButton {

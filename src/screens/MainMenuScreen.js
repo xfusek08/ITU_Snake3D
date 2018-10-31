@@ -145,6 +145,7 @@ var MainMenuScreen = function (canvas) {
   function createMaps() {
     var mapArray = [];
     var map = new WorldMap(this.mapArray[0].name, 20, 30)
+    map.placeObject(10,15,OBJ_START);
     mapArray.push(map);
     map = new WorldMap(this.mapArray[1].name, 20, 30)
     for(var i = 1; i < 31; i++){
@@ -155,6 +156,7 @@ var MainMenuScreen = function (canvas) {
       map.placeObject(i,1,OBJ_WALL);
       map.placeObject(i,30,OBJ_WALL);
     }
+    map.placeObject(10,15,OBJ_START);
     mapArray.push(map);
     map = new WorldMap(this.mapArray[2].name, 20, 30)
     for(var i = 1; i < 31; i++){
@@ -170,6 +172,7 @@ var MainMenuScreen = function (canvas) {
     map.placeObject(11,14,OBJ_WALL);
     map.placeObject(12,16,OBJ_WALL);
     map.placeObject(13,16,OBJ_WALL);
+    map.placeObject(8,7,OBJ_START);
     mapArray.push(map);
     return mapArray;
   }

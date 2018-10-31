@@ -14,6 +14,9 @@ var WorldMap = function (
   this.Width = width;
   this.Height = height;
   this.WallPlacement = {};
+  this.SnakePlacement = [];
+  this.SnakeHeadPos = null;
+  this.SnakeDirect = 0;
   this.StartPosition = null;
   this.foodPosition = null;
 
@@ -76,6 +79,21 @@ var WorldMap = function (
       pop();
     }
 
+    if (this.SnakeHeadPos !== null) {
+      push();
+      ambientMaterial(10, 250, 10);
+      specularMaterial(10, 250, 10);
+      translate(
+        this.SnakeHeadPos.X * TILE_SIZE - TILE_SIZE / 2,
+        this.SnakeHeadPos.Y * TILE_SIZE - TILE_SIZE / 2);
+      /*translate(0, 0, TILE_SIZE * -0.3);
+      rotateX(PI/4);
+      box(TILE_SIZE * 0.8, TILE_SIZE, TILE_SIZE);*/
+      noStroke();
+      sphere(TILE_SIZE * 0.5);
+      pop();
+    }
+
     push();
     ambientMaterial(255, 100, 255);
     specularMaterial(255, 100, 255);
@@ -91,6 +109,22 @@ var WorldMap = function (
         box(TILE_SIZE);
         pop();
       }
+    }
+    pop();
+
+    push();
+    ambientMaterial(10, 250, 10);
+    specularMaterial(10, 250, 10);
+    stroke(100);
+    translate(0, 0, TILE_SIZE * 0.55);
+    for (var pos in this.SnakePlacement) {
+      var coors = this.SnakePlacement[pos];
+      push();
+      translate(
+        coors[0] * TILE_SIZE - TILE_SIZE / 2,
+        coors[1] * TILE_SIZE - TILE_SIZE / 2);
+      box(TILE_SIZE * 0.8, TILE_SIZE, TILE_SIZE);
+      pop();
     }
     pop();
   }
@@ -145,5 +179,77 @@ var WorldMap = function (
     todelete.forEach(pos => {
       delete this.WallPlacement[pos];
     });
+  }
+
+  this.prepareStart = function() {
+    this.SnakeHeadPos = this.StartPosition;
+    this.StartPosition = null;
+    this.generateApple();
+  }
+
+  this.generateApple = function() {
+    var empty = {};
+    var topLimit = 0;
+    for(var x = 1; x < this.Width; x++)
+      for(var y = 1; y < this.Height; y++)
+        if(this.WallPlacement[[x, y]] != true 
+          && !(x == this.SnakeHeadPos.X && y == this.SnakeHeadPos.Y)) {
+          empty[[x, y]] = true;
+          topLimit++;
+        }
+    for(var pos in this.SnakePlacement) {
+      var coors = this.SnakePlacement[pos];
+      if(empty[coors[0], coors[1]] == true) {
+        empty[coors[0], coors[1]] = false;
+        topLimit--;
+      }
+    }
+    var random = Math.floor((Math.random() * topLimit) + 1);
+    for(var pos in empty) {
+      if(empty[pos]) {
+        random--;
+        if(random == 0) {
+          var coors = pos.split(",");
+          this.foodPosition = new WorldPosition(coors[0], coors[1]);
+        }
+      }
+    }
+  }
+
+  this.changeDirection = function(add) {
+    this.SnakeDirect += add;
+    if(this.SnakeDirect < 0)
+      this.SnakeDirect = 3;
+    if(this.SnakeDirect > 3)
+      this.SnakeDirect = 0;
+  }
+
+  this.moveSnake = function() {
+    this.SnakePlacement.push([this.SnakeHeadPos.X, this.SnakeHeadPos.Y]);
+    switch(this.SnakeDirect) {
+      case 0:
+        this.SnakeHeadPos.Y--;
+        break;
+      case 1:
+        this.SnakeHeadPos.X++;
+        break;
+      case 2:
+        this.SnakeHeadPos.Y++;
+        break;
+      case 3:
+        this.SnakeHeadPos.X--;
+        break;
+    }
+    if(!this.checkApple())
+      this.SnakePlacement.shift();
+  }
+
+  this.checkApple = function() {
+    if(this.SnakeHeadPos.X == this.foodPosition.X && this.SnakeHeadPos.Y == this.foodPosition.Y) {
+      this.generateApple();
+      return true;
+    }
+    else
+      return false;
   }
 }

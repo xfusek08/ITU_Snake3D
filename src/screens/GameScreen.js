@@ -11,6 +11,8 @@ var GameScreen = function (canvas, worldMap) {
   var canvas = canvas;
   var isPaused = true;
 
+  var date = null;
+
   var camera = null;
 
   // public
@@ -20,7 +22,8 @@ var GameScreen = function (canvas, worldMap) {
     this.gameScreenDiv.show();
     this.gameScreenDiv.style('background', 'transparent');
 
-    worldMap.placeObject(5,5,OBJ_APPLE);
+    worldMap.prepareStart();
+    this.date = new Date();
 
     resizeCanvas(this.gameScreenDiv.size().width, this.gameScreenDiv.size().height);
     canvas.show();
@@ -59,14 +62,26 @@ var GameScreen = function (canvas, worldMap) {
 
     camera.use();
 
+    var currentDate = (new Date()).getTime();
+    if(currentDate >= this.date.getTime()) {
+      worldMap.moveSnake();
+      this.date.setTime(currentDate + 1000);
+    }
+
     worldMap.draw();
   }
+
+  this.keyPressedEvent = function () {
+    if(keyCode == RIGHT_ARROW)
+      worldMap.changeDirection(1);
+    if(keyCode == LEFT_ARROW)
+      worldMap.changeDirection(-1);
+   }
 
   // unused functions
   this.mouseWheenEvent = function(event) {}
   this.touchMovedEvent = function () { }
   this.touchStartedEvent = function () { }
   this.touchEndedEvent = function () { }
-  this.keyPressedEvent = function () { }
   this.keyReleasedEvent = function () { }
 }

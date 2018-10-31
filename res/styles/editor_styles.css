@@ -73,7 +73,8 @@
 
 .topbar .buttonCell {
   padding: 10px;
-  padding-left: 2px;
+  padding-left: 0px;
+  padding-right: 5px;
 }
 
 .topbar .topBarButton {

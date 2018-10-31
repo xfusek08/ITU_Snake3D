@@ -20,11 +20,11 @@
 }
 
 #editorHelpScreenDiv #name_help_arrow {
-  width: 70px;
-  height: 100px;
-  left: calc(10% + 50px);
+  width: 95px;
+  height: 250px;
+  left: calc(50% - 100px);
   top: 55px;
-  background-size: 60%;
+  background-size: 100%;
   background-image: url(../img/name_help_arrow.png);
 }
 
@@ -57,8 +57,8 @@
 #editorHelpScreenDiv #name_help_text {
   height: 60px;
   width: 400px;
-  left: calc(10% + 105px);
-  top: 110px;
+  left: calc(50% - 20px);
+  top: 300px;
 }
 
 #editorHelpScreenDiv #topbarbuttons_help_text {
@@ -125,14 +125,38 @@
   padding: 0;
   padding-top: 5px;
   padding-left: 25px;
-  padding-right: 50px;
+  padding-right: 75px;
 }
 
 #editorHelpScreenDiv #nameinput_help_bar .nameCell > div {
-  height: 50px;
-
+  height: 40px;
 }
 
 #editorHelpScreenDiv #nameinput_help_bar .buttonCell > div {
   width: 20px;
+}
+
+#editorHelpScreenDiv #sizesetting_help_text {
+  height: 100px;
+  width: 500px;
+  left: calc(10% + 65px);
+  top: 150px;
+}
+
+#editorHelpScreenDiv #sizesetting_arrow {
+  /* border: 2px solid red; */
+  width: 50px;
+  height: 100px;
+  left: calc(10% + 20px);
+  top: 105px;
+  background-size: 100%;
+  background-image: url(../img/sizesetting_help_arrow.png);
+}
+
+#editorHelpScreenDiv #sizesetting_help {
+  position: absolute;
+  height: 45px;
+  width: 365px;
+  left: calc(10% + 15px);
+  top: 57px;
 }

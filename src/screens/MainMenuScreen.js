@@ -101,7 +101,7 @@ var MainMenuScreen = function (canvas) {
     addImg.className = 'addImg';
 
     textHolder = document.createElement("p");
-    textHolder.appendChild(document.createTextNode("Add button"));
+    textHolder.appendChild(document.createTextNode("Nová mapa"));
 
     addButton.appendChild(addImg);
     addButton.appendChild(textHolder);
@@ -133,11 +133,11 @@ var MainMenuScreen = function (canvas) {
   //will load from file later
   function loadMaps() {
     var mapArray = [];
-    var map = { 'src': 'res/img/emptyMap.png', 'name': 'Empty' };
+    var map = { 'src': 'res/img/emptyMap.png', 'name': 'Prázdná' };
     mapArray.push(map);
-    map = { 'src': 'res/img/notEmptyMap.png', 'name': 'Full' };
+    map = { 'src': 'res/img/notEmptyMap.png', 'name': 'Plné kraje' };
     mapArray.push(map);
-    map = { 'src': 'res/img/userCreated.png', 'name': 'Custom' };
+    map = { 'src': 'res/img/userCreated.png', 'name': 'Vlastní mapa 1' };
     mapArray.push(map);
     return mapArray;
   }
@@ -300,6 +300,6 @@ var MainMenuScreen = function (canvas) {
   }
 
   function clickAdd() {
-    screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('User map 1', 30, 20)));
+    screenStack.pushScreen(new EditorScreen(canvas, new WorldMap('Vlastní mapa 2', 30, 20)));
   }
 }

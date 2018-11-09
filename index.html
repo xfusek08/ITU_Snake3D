@@ -3,29 +3,114 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake3D</title>
+    <title>Had ve 3D</title>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/common_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/editor_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/editorHelp_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/mainMenu_styles.css">
+    <link rel="stylesheet" type="text/css" href="res/styles/game_styles.css">
 
+    <!-- utils and constants files -->
+    <script src="src/constants.js"></script>
+    <script src="src/utils.js"></script>
+
+    <!-- p5 libraries -->
     <script src="lib/p5.min.js"></script>
     <script src="lib/p5.dom.min.js"></script>
     <script src="lib/p5.sound.min.js"></script>
 
-    <script src="src/main.js"></script>
-    <script src="src/mainmenu.js"></script>
-    <script src="src/constants.js"></script>
-  </head>
-  <body>
-    <div class="screen" id="mainMenuScreenDiv">
+    <!-- Common directory sources -->
+    <script src="src/common/MessageBox.js"></script>
+    <script src="src/common/GeneralCamera.js"></script>
+    <script src="src/common/WorldPosition.js"></script>
+    <script src="src/common/WorldMap.js"></script>
+    <script src="src/common/WorldObject.js"></script>
+    <script src="src/common/WorldObjectFactory.js"></script>
 
+    <!-- editor directory sources -->
+    <script src="src/editor/ObjectBar.js"></script>
+    <script src="src/editor/ObjectBarItem.js"></script>
+
+    <!-- screens  -->
+    <script src="src/screens/EditorHelpScreen.js"></script>
+    <script src="src/screens/EditorScreen.js"></script>
+    <script src="src/screens/GameScreen.js"></script>
+    <script src="src/screens/MainMenuScreen.js"></script>
+
+    <!-- main  -->
+    <script src="src/main.js"></script>
+  </head>
+  <body id="mainbody">
+    <div class="screen" id="mainMenuScreenDiv">
+      <header>
+        <h1>Had ve 3D</h1>
+      </header>
+      <div class="menu" id="mapMenu"></div>
     </div>
 
     <div class="screen" id="editorScreenDiv">
 
-    </div>
+      <div id="editor_objectbar"></div>
 
-    <div class="screen" id="gameScreenDiv">
+      <div class="looseDroppingObject topbar" id="editor_topbar">
+        <table>
+          <tr>
+            <td></td>
+            <td class="nameCell"><input type="text" id="worldMapName_input" /></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="saveTopButton"></div></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="helpTopButton"></div></td>
+            <td class="buttonCell"><div class="generalButton topBarButton" id="exitTopButton"></div></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td rowspan="4" class="sizeSettingCell">
+              <!-- <span>Rozměry mapy</span> -->
+              <span>Šířka : <input type="number" id="worldXSize_input" min="1" max="50" maxlength="2" /></span>
+              <span>Výška : <input type="number" id="worldYSize_input" min="1" max="50" maxlength="2" /></span>
+              <span class="generalButton" id="useNewSizeButton">Použít</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="screen" id="editorHelpScreenDiv">
+      <div class="helprectangle" id="objbar_help"></div>
+      <div class="helprectangle" id="sizesetting_help"></div>
+      <div class="heplarrow" id="sizesetting_arrow"></div>
+      <div class="heplarrow" id="objbar_help_arrow"></div>
+      <div class="heplarrow" id="name_help_arrow"></div>
+      <div class="heplarrow" id="topbarbuttons_help_arrow"></div>
+      <div class="helptext" id="sizesetting_help_text"><u>Nastavení rozměrů mapy</u>. Po zadání nových rozměrů, stisknmutím tlačítka <u>použít</u> aplikujete změny na aktuální mapu.</div>
+      <div class="helptext" id="ojbbar_help_text"><u>Panel objektů,</u> které je možné umístit na herní mapu. Kliknutím vyberte objekt, potom klinutím do herního pole nebo tahem po herním poly umístěte objekt(y) na vybrané pozice</div>
+      <div class="helptext" id="name_help_text"><u>Jméno mapy</u>, zde se zadá jméno aktuální mapy, pod kterým bude uložena.</div>
+      <div class="helptext" id="topbarbuttons_help_text">
+        Uložení mapy<br><br>
+        Zobrazí tuto nápovědu<br><br>
+        Ukončení editoru a návrat na
+        hlavní obrazovku
+      </div>
+      <div class="helprectangle" id="control_help"></div>
+      <div class="helptext" id="control_help_text_caption">Ovládání</div>
+      <div class="heplarrow" id="control_help_icons"></div>
+      <div class="helptext" id="control_help_text">
+        Kolečko nahoru nebo dolů přibližuje nebo oddaluje<br><br>
+        Držením tlačítka a tahem pohybuje mapou vlevo nebo vpravo<br><br>
+        Levým tlačítkem vybíráte
+        a umisťujete přetažením objekty z panelu objektů.
+      </div>
+      <div class="topbar" id="nameinput_help_bar">
+        <table>
+          <td></td>
+          <td class="nameCell"><div class="helprectangle"></div></td>
+          <td class="buttonCell"><div></div></td>
+          <td class="buttonCell"><div></div></td>
+          <td class="buttonCell"><div></div></td>
+        </table>
+      </div>
 
     </div>
+    <div class="screen" id="gameScreenDiv"></div>
+    <span id="fpscounter"></span>
   </body>
 </html>

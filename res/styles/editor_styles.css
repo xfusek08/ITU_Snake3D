@@ -1,0 +1,181 @@
+
+#editorScreenDiv > div {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+
+.topbar {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.topbar table {
+  width: 100%;
+}
+
+.topbar table td:first-child {
+  width: 10%;
+}
+
+.topbar .nameCell {
+  width:90%;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.topbar #worldMapName_input {
+  width: 100%;
+}
+
+.sizeSettingCell {
+  color: white;
+  font-size: 20px;
+  font-family: "Segoe UI";
+  padding-left: 33px;
+}
+
+.sizeSettingCell input[type="text"],
+.sizeSettingCell input[type="number"] {
+  width: 50px;
+}
+
+.sizeSettingCell span {
+  margin-right: 10px;
+}
+
+.topbar input[type="text"],
+.topbar input[type="number"] {
+  border: 3px solid #5A5A92;
+  border-radius: 100px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-family: "Segoe UI";
+}
+
+.topbar input[type="text"]:focus,
+.topbar input[type="number"]:focus {
+  outline: none;
+}
+
+#editor_objectbar,
+.topbar input[type="text"],
+.topbar input[type="number"] {
+  background: rgba(10, 10, 30, 0.7);
+}
+
+.topbar #worldMapName_input:focus {
+  outline: 0;
+}
+
+.topbar .buttonCell {
+  padding: 10px;
+  padding-left: 0px;
+  padding-right: 1px;
+}
+
+.topbar .buttonCell:last-child {
+  padding-right: 13px;
+}
+
+.topbar .topBarButton {
+  border: 2.4px white solid;
+  width: 20px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 100px;
+  background-size: 65%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.topbar .topBarButton:hover {
+  cursor: pointer;
+  /* background-color: rgba(10, 10, 30, 0.7); */
+  /* -webkit-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  -moz-box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52);
+  box-shadow: 0px 0px 5px 5px rgba(255,255,255,0.52); */
+}
+
+.topbar #saveTopButton {
+  background-image: url("../img/save.png");
+}
+
+.topbar #helpTopButton {
+  background-image: url("../img/questionmark.png");
+  background-size: 70%;
+}
+
+.topbar #exitTopButton {
+  background-image: url("../img/cross.png");
+}
+
+#editor_canvas_div {
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  float: left;
+  background-color: rgba(100, 100, 100, 0.3);
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+}
+
+#editor_canvas_div > * {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+#fpscounter {
+  position: absolute;
+  top: calc(100% - 50px);
+  left: calc(100% - 200px);
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.p5Canvas.objCanvas {
+  position: relative;
+  z-index: 5;
+}
+
+#editor_objectbar {
+  border-right: 3px solid #5A5A92;
+  width: 10%;
+  min-width: 90px;
+  height: 100%;
+  color:white;
+  text-align: center;
+}
+
+#editor_objectbar .delimiter {
+  border-bottom: 3px solid #5A5A92;
+  margin-left: 13px;
+  margin-right: 13px;
+}
+
+#editor_objectbar .objectBarItemDiv {
+  margin: 8px;
+  border-radius: 20px;
+}
+
+#editor_objectbar .objectBarItemDiv > div {
+  padding: 5px;
+}
+
+#editor_objectbar .objectBarItemDiv:hover {
+  background-color: rgba(255,255,255,0.1);
+  /* cursor: pointer; */
+  cursor: pointer;
+}
+
+#editor_objectbar .objectBarItemDiv.selected {
+  background: rgba(200, 200, 255, 0.3);
+}

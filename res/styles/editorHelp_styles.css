@@ -1,0 +1,162 @@
+
+#editorHelpScreenDiv {
+  background: transparent;
+  opacity: 0;
+}
+
+#editorHelpScreenDiv .heplarrow {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#editorHelpScreenDiv #objbar_help_arrow {
+  width: 90px;
+  height: 100px;
+  top: calc(100% - 140px);
+  left: calc(10% + 15px);
+  background-size: 100%;
+  background-image: url(../img/objbar_help_arrow.png);
+}
+
+#editorHelpScreenDiv #name_help_arrow {
+  width: 95px;
+  height: 250px;
+  left: calc(60% - 100px);
+  top: 55px;
+  background-size: 100%;
+  background-image: url(../img/name_help_arrow.png);
+}
+
+#editorHelpScreenDiv #topbarbuttons_help_arrow {
+  width: 140px;
+  height: 200px;
+  left: calc(100% - 150px);
+  top: 45px;
+  background-size: 100%;
+  background-image: url(../img/topbarbuttons_help_arrow.png);
+}
+
+#editorHelpScreenDiv .helptext {
+  color: white;
+  font-family: "Comic Sans MS";
+  font-size: 20px;
+  position: absolute;
+  background-color: rgba(10, 10, 30, 0.4);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+#editorHelpScreenDiv  #ojbbar_help_text {
+  height: 85px;
+  width: 600px;
+  left: calc(10% + 105px);
+  top: calc(100% - 100px);
+}
+
+#editorHelpScreenDiv #name_help_text {
+  height: 60px;
+  width: 400px;
+  left: calc(60% - 20px);
+  top: 300px;
+}
+
+#editorHelpScreenDiv #topbarbuttons_help_text {
+  height: 170px;
+  width: 270px;
+  left: calc(100% - 440px);
+  top: 80px;
+  text-align: right;
+}
+
+#editorHelpScreenDiv #control_help_icons {
+  height: 300px;
+  width: 100px;
+  left: calc(100% - 410px);
+  top: calc(100% - 307px);
+  background-size: 60%;
+  background-image: url(../img/mousecontrol_help_icons.png);
+}
+
+#editorHelpScreenDiv #control_help_text {
+  background-color: transparent;
+  height: 280px;
+  width: 300px;
+  left: calc(100% - 325px);
+  top: calc(100% - 295px);
+}
+
+#editorHelpScreenDiv #control_help_text_caption {
+  background: transparent;
+  top: calc(100% - 355px);
+  left: calc(100% - 265px);
+  height: 25px;
+  width: 150px;
+  font-size: 30px;
+}
+
+#editorHelpScreenDiv .helprectangle {
+  border: 3px solid white;
+  border-radius: 10px;
+}
+
+#editorHelpScreenDiv #control_help {
+  background-color: rgba(10, 10, 30, 0.4);
+  position: absolute;
+  width: 400px;
+  height: 300px;
+  left: calc(100% - 403px);
+  top: calc(100% - 303px);
+  border-bottom: none;
+  border-right: none;
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+}
+
+#editorHelpScreenDiv #objbar_help {
+  height: calc(100% - 16px);
+  width: calc(10% + 2px);
+  position: absolute;
+  left: 3px;
+  top: 3px;
+}
+
+#editorHelpScreenDiv #nameinput_help_bar .nameCell {
+  padding: 0;
+  padding-top: 5px;
+  padding-left: 25px;
+  padding-right: 75px;
+}
+
+#editorHelpScreenDiv #nameinput_help_bar .nameCell > div {
+  height: 40px;
+}
+
+#editorHelpScreenDiv #nameinput_help_bar .buttonCell > div {
+  width: 20px;
+}
+
+#editorHelpScreenDiv #sizesetting_help_text {
+  height: 100px;
+  width: 500px;
+  left: calc(10% + 65px);
+  top: 150px;
+}
+
+#editorHelpScreenDiv #sizesetting_arrow {
+  /* border: 2px solid red; */
+  width: 50px;
+  height: 100px;
+  left: calc(10% + 20px);
+  top: 105px;
+  background-size: 100%;
+  background-image: url(../img/sizesetting_help_arrow.png);
+}
+
+#editorHelpScreenDiv #sizesetting_help {
+  position: absolute;
+  height: 45px;
+  width: 365px;
+  left: calc(10% + 15px);
+  top: 57px;
+}

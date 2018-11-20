@@ -6,6 +6,7 @@
 var GameScreen = function (canvas, worldMap) {
 
   this.gameScreenDiv = null;
+  this.going = true;
 
   var worldMap = worldMap;
   var canvas = canvas;
@@ -63,19 +64,23 @@ var GameScreen = function (canvas, worldMap) {
     camera.use();
 
     var currentDate = (new Date()).getTime();
-    if(currentDate >= this.date.getTime()) {
-      worldMap.moveSnake();
-      this.date.setTime(currentDate + 1000);
+    if(currentDate >= this.date.getTime() && this.going) {
+      this.going = worldMap.moveSnake();
+      this.date.setTime(currentDate + 750);
     }
 
     worldMap.draw();
   }
 
   this.keyPressedEvent = function () {
-    if(keyCode == RIGHT_ARROW)
+    if(keyCode == UP_ARROW)
+      worldMap.changeDirection(0);
+    else if(keyCode == RIGHT_ARROW)
       worldMap.changeDirection(1);
-    if(keyCode == LEFT_ARROW)
-      worldMap.changeDirection(-1);
+    else if(keyCode == DOWN_ARROW)
+      worldMap.changeDirection(2);
+    else if(keyCode == LEFT_ARROW)
+      worldMap.changeDirection(3);
    }
 
   // unused functions

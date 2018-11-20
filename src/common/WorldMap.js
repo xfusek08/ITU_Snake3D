@@ -9,6 +9,8 @@ var WorldMap = function (
   width = DEFAULT_WORLD_SIZE,
   height = DEFAULT_WORLD_SIZE
 ) {
+  
+  this.noCollision = true;
 
   this.Name = name;
   this.Width = width;
@@ -19,6 +21,7 @@ var WorldMap = function (
   this.SnakeDirect = 0;
   this.StartPosition = null;
   this.foodPosition = null;
+  
 
   var startObject = (new WorldObjectFactory()).createStartObject();
   var foodObject = (new WorldObjectFactory()).createAppleObject();
@@ -85,10 +88,8 @@ var WorldMap = function (
       specularMaterial(10, 250, 10);
       translate(
         this.SnakeHeadPos.X * TILE_SIZE - TILE_SIZE / 2,
-        this.SnakeHeadPos.Y * TILE_SIZE - TILE_SIZE / 2);
-      /*translate(0, 0, TILE_SIZE * -0.3);
-      rotateX(PI/4);
-      box(TILE_SIZE * 0.8, TILE_SIZE, TILE_SIZE);*/
+        this.SnakeHeadPos.Y * TILE_SIZE - TILE_SIZE / 2,
+        this.SnakeHeadPos.Z + TILE_SIZE);
       noStroke();
       sphere(TILE_SIZE * 0.5);
       pop();
@@ -115,7 +116,6 @@ var WorldMap = function (
     push();
     ambientMaterial(10, 250, 10);
     specularMaterial(10, 250, 10);
-    stroke(100);
     translate(0, 0, TILE_SIZE * 0.55);
     for (var pos in this.SnakePlacement) {
       var coors = this.SnakePlacement[pos];
@@ -123,7 +123,7 @@ var WorldMap = function (
       translate(
         coors[0] * TILE_SIZE - TILE_SIZE / 2,
         coors[1] * TILE_SIZE - TILE_SIZE / 2);
-      box(TILE_SIZE * 0.8, TILE_SIZE, TILE_SIZE);
+      box(TILE_SIZE, TILE_SIZE, TILE_SIZE / 2);
       pop();
     }
     pop();
@@ -217,15 +217,12 @@ var WorldMap = function (
   }
 
   this.changeDirection = function(add) {
-    this.SnakeDirect += add;
-    if(this.SnakeDirect < 0)
-      this.SnakeDirect = 3;
-    if(this.SnakeDirect > 3)
-      this.SnakeDirect = 0;
+    this.SnakeDirect = add;
   }
 
   this.moveSnake = function() {
     this.SnakePlacement.push([this.SnakeHeadPos.X, this.SnakeHeadPos.Y]);
+    this.checkVoid();
     switch(this.SnakeDirect) {
       case 0:
         this.SnakeHeadPos.Y--;
@@ -242,6 +239,10 @@ var WorldMap = function (
     }
     if(!this.checkApple())
       this.SnakePlacement.shift();
+    
+    this.checkCol();
+
+    return this.noCollision;
   }
 
   this.checkApple = function() {
@@ -251,5 +252,41 @@ var WorldMap = function (
     }
     else
       return false;
+  }
+
+  this.checkCol = function() {
+    for (var pos in this.SnakePlacement) {
+      var coors = this.SnakePlacement[pos];
+      if(coors[0] == this.SnakeHeadPos.X && coors[1] == this.SnakeHeadPos.Y)
+        this.noCollision = false;
+    }
+    for (var pos in this.WallPlacement) {
+      if (this.WallPlacement[pos]) {
+        var coors = pos.split(",");
+        if(coors[0] == this.SnakeHeadPos.X && coors[1] == this.SnakeHeadPos.Y)
+          this.noCollision = false;
+      }
+    }
+  }
+  
+  this.checkVoid = function() {
+    switch(this.SnakeDirect) {
+      case 0:
+        if(this.SnakeHeadPos.Y <= 1)
+          this.SnakeHeadPos.Y = this.Height + 1;
+        break;
+      case 1:
+        if(this.SnakeHeadPos.X >= this.Width)
+          this.SnakeHeadPos.X = 0;
+        break;
+      case 2:
+        if(this.SnakeHeadPos.Y >= this.Height)
+          this.SnakeHeadPos.Y = 0;
+        break;
+      case 3:
+        if(this.SnakeHeadPos.X <= 1)
+          this.SnakeHeadPos.X = this.Width + 1;
+        break;
+    }
   }
 }

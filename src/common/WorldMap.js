@@ -21,8 +21,10 @@ var WorldMap = function (
   this.SnakeDirect = 0;
   this.StartPosition = null;
   this.foodPosition = null;
+  this.firstStart = true; 
   
 
+  var PreStartPosition = null;
   var startObject = (new WorldObjectFactory()).createStartObject();
   var foodObject = (new WorldObjectFactory()).createAppleObject();
 
@@ -182,7 +184,23 @@ var WorldMap = function (
   }
 
   this.prepareStart = function() {
-    this.SnakeHeadPos = this.StartPosition;
+    this.noCollision = true;
+    this.SnakeDirect = 0;
+    if(this.firstStart == true)
+    {
+      PreStartPosition = new WorldPosition(1, 1);
+      PreStartPosition.X = this.StartPosition.X;
+      PreStartPosition.Y = this.StartPosition.Y;
+
+      this.SnakeHeadPos = this.StartPosition;
+      this.firstStart = false;
+    }
+    else
+    {
+      this.SnakeHeadPos.X = PreStartPosition.X;
+      this.SnakeHeadPos.Y = PreStartPosition.Y;
+      this.SnakePlacement = [];
+    }
     this.StartPosition = null;
     this.generateApple();
   }

@@ -1,99 +1,7 @@
 
 // Project: ITU project: Game "Snake in 3D" (UX prototype)
-// File: MainMenuScreen.js
-// Type of screen witch displays game and screen for game menu
-
-var decision = 0;
-
-var GameMenuScreen = function () {
-
-  var GameMenuScreenDiv = null;
-  var exited = false;
-
-  // public
-  this.init = function () {
-    // generate screen html and behavor
-    GameMenuScreenDiv = select('#gameMenuScreenDiv');
-
-    var button = document.getElementById("con_game");
-    button.addEventListener("click", clickCon, false);
-    var button = document.getElementById("res_game");
-    button.addEventListener("click", clickRes, false);
-    var button = document.getElementById("men_game");
-    button.addEventListener("click", clickMen, false);
-
-    this.show();
-  }
-
-  this.deinit = function () {
-    // generate screen html and behavor
-    this.hide();
-  }
-
-  this.draw = function () {
-    // real time reaction ...
-  }
-
-  this.hide = function () {
-    this.fadeOut(function () {
-      GameMenuScreenDiv.hide();
-    });
-  }
-
-  this.show = function () {
-    this.fadeIn();
-  }
-
-  this.mouseWheenEvent = function(event) {}
-  this.touchMovedEvent = function (event) {}
-  this.touchStartedEvent = function (event) {}
-  this.touchEndedEvent = function (event) {}
-  this.keyPressedEvent = function () {}
-  this.keyReleasedEvent = function () {}
-
-  this.fadeOut = function (callback) {
-    var elem = document.getElementById('gameMenuScreenDiv');
-    elem.style.transition = "opacity 0.5s linear 0s";
-    elem.style.opacity = 0;
-    if (typeof callback == 'function')
-      setTimeout(() => { callback(); }, 500);
-  }
-
-  this.fadeIn = function (callback) {
-    var elem = document.getElementById('gameMenuScreenDiv');
-    elem.style.display = "block";
-
-    setTimeout(() => {
-      elem.style.transition = "opacity 0.5s linear 0s";
-      elem.style.opacity = 1;
-      if (typeof callback == 'function')
-        setTimeout(() => { callback(); }, 200);
-    }, 100);
-  }
-
-  function clickCon() {
-    decision = 0;
-    exit();
-  }
-
-  function clickRes() {
-    decision = 1;
-    exit();
-  }
-
-  function clickMen() {
-    decision = 2;
-    exit();
-  }
-
-  function exit() {
-    if (!exited) {
-      exited = true;
-      screenStack.popScreen();
-    }
-  }
-
-}
+// File: GameScreen.js
+// Type of screen witch displays game
 
 var GameScreen = function (canvas, worldMap) {
 
@@ -105,6 +13,8 @@ var GameScreen = function (canvas, worldMap) {
   var isPaused = true;
   var showThis = true;
   var canvas = canvas;
+
+  var decision = {val: 0};
 
   var camera = null;
 
@@ -169,15 +79,15 @@ var GameScreen = function (canvas, worldMap) {
     worldMap.draw();
 
       
-    if(decision == 1)
+    if(decision.val == 1)
     {
-      decision = 0;
+      decision.val = 0;
       this.going = true;
       this.init();
     }
-    else if(decision >= 2)
+    else if(decision.val >= 2)
     {
-      decision = 0;
+      decision.val = 0;
       this.going = true;
       exit();
     }
@@ -196,8 +106,8 @@ var GameScreen = function (canvas, worldMap) {
     {
       showThis = false;
       this.hide();
-      decision = 0;
-      screenStack.pushScreen(new GameMenuScreen());
+      decision.val = 0;
+      screenStack.pushScreen(new GameMenuScreen(decision));
       showThis = true;
     }
    }

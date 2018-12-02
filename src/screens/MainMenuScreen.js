@@ -280,6 +280,7 @@ var MainMenuScreen = function (canvas) {
       if (myTarget == buttons[i]) {
         pos = i;
       }
+    myMaps = createMaps();
     screenStack.pushScreen(new GameScreen(canvas, myMaps[pos]));
   }
 
@@ -291,6 +292,7 @@ var MainMenuScreen = function (canvas) {
       if (myTarget == buttons[i]) {
         pos = i;
       }
+    myMaps = createMaps();
     screenStack.pushScreen(new EditorScreen(canvas, myMaps[pos]));
   }
 

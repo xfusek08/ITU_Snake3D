@@ -25,6 +25,7 @@ var GameScreen = function (canvas, worldMap) {
     this.gameScreenDiv.show();
     this.gameScreenDiv.style('background', 'transparent');
     this.going = true;
+    this.lost = false;
 
     worldMap.prepareStart();
     this.date = new Date();
@@ -73,11 +74,21 @@ var GameScreen = function (canvas, worldMap) {
     var currentDate = (new Date()).getTime();
     if(currentDate >= this.date.getTime() && this.going) {
       this.going = worldMap.moveSnake();
-      this.date.setTime(currentDate + 750);
+      this.lost = true;
+      this.date.setTime(currentDate + 550);
     }
 
     worldMap.draw();
 
+    if(!this.going && this.lost)
+    {
+      showThis = false;
+      this.hide();
+      decision.val = 0;
+      screenStack.pushScreen(new GameMenuScreen(decision));
+      showThis = true;
+      this.lost = false;
+    }
       
     if(decision.val == 1)
     {
